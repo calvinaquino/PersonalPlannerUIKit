@@ -1,0 +1,80 @@
+BCSymbolMap Version: 2.0
+Apple clang version 11.0.0 (clang-1100.0.33.16)
+/Users/calvinaquino/Projects/Planejador Pessoal/Carthage/Checkouts/facebook-objc-sdk/FBSDKLoginKit/FBSDKLoginKit/FBSDKLoginConstants.m
+/Users/calvinaquino/Projects/Planejador Pessoal/Carthage/Checkouts/facebook-objc-sdk/FBSDKLoginKit
+-[FBSDKDeviceLoginCodeInfo initWithIdentifier:loginCode:verificationURL:expirationDate:pollingInterval:]
+-[FBSDKDeviceLoginCodeInfo identifier]
+-[FBSDKDeviceLoginCodeInfo loginCode]
+-[FBSDKDeviceLoginCodeInfo verificationURL]
+-[FBSDKDeviceLoginCodeInfo expirationDate]
+-[FBSDKDeviceLoginCodeInfo pollingInterval]
+-[FBSDKDeviceLoginCodeInfo .cxx_destruct]
+_OBJC_IVAR_$_FBSDKDeviceLoginCodeInfo._identifier
+_OBJC_IVAR_$_FBSDKDeviceLoginCodeInfo._loginCode
+_OBJC_IVAR_$_FBSDKDeviceLoginCodeInfo._verificationURL
+_OBJC_IVAR_$_FBSDKDeviceLoginCodeInfo._expirationDate
+_OBJC_IVAR_$_FBSDKDeviceLoginCodeInfo._pollingInterval
+/Users/calvinaquino/Projects/Planejador Pessoal/Carthage/Checkouts/facebook-objc-sdk/FBSDKLoginKit/FBSDKLoginKit/FBSDKDeviceLoginCodeInfo.m
+FBSDKLoginKit/FBSDKDeviceLoginCodeInfo.m
+FBSDKLoginKit/FBSDKDeviceLoginCodeInfo.h
++[FBSDKDeviceLoginManager initialize]
+-[FBSDKDeviceLoginManager initWithPermissions:enableSmartLogin:]
+-[FBSDKDeviceLoginManager start]
+___32-[FBSDKDeviceLoginManager start]_block_invoke
+___copy_helper_block_e8_32s
+___destroy_helper_block_e8_32s
+-[FBSDKDeviceLoginManager cancel]
+-[FBSDKDeviceLoginManager _notifyError:]
+-[FBSDKDeviceLoginManager _notifyToken:]
+___40-[FBSDKDeviceLoginManager _notifyToken:]_block_invoke
+___40-[FBSDKDeviceLoginManager _notifyToken:]_block_invoke.105
+___copy_helper_block_e8_32s40s48b
+___destroy_helper_block_e8_32s40s48s
+-[FBSDKDeviceLoginManager _processError:]
+-[FBSDKDeviceLoginManager _schedulePoll:]
+___41-[FBSDKDeviceLoginManager _schedulePoll:]_block_invoke
+___41-[FBSDKDeviceLoginManager _schedulePoll:]_block_invoke_2
+-[FBSDKDeviceLoginManager netService:didNotPublish:]
+-[FBSDKDeviceLoginManager delegate]
+-[FBSDKDeviceLoginManager setDelegate:]
+-[FBSDKDeviceLoginManager permissions]
+-[FBSDKDeviceLoginManager redirectURL]
+-[FBSDKDeviceLoginManager setRedirectURL:]
+-[FBSDKDeviceLoginManager .cxx_destruct]
+_g_loginManagerInstances
+___block_descriptor_40_e8_32s_e52_v32?0"FBSDKGraphRequestConnection"816"NSError"24l
+___block_descriptor_40_e8_32s_e39_v16?0"FBSDKDeviceLoginManagerResult"8l
+___block_descriptor_56_e8_32s40s48bs_e52_v32?0"FBSDKGraphRequestConnection"816"NSError"24l
+___block_descriptor_40_e8_32s_e5_v8?0l
+__OBJC_PROTOCOL_$_NSObject
+__OBJC_LABEL_PROTOCOL_$_NSObject
+__OBJC_PROTOCOL_$_NSNetServiceDelegate
+__OBJC_LABEL_PROTOCOL_$_NSNetServiceDelegate
+_OBJC_IVAR_$_FBSDKDeviceLoginManager._codeInfo
+_OBJC_IVAR_$_FBSDKDeviceLoginManager._isCancelled
+_OBJC_IVAR_$_FBSDKDeviceLoginManager._loginAdvertisementService
+_OBJC_IVAR_$_FBSDKDeviceLoginManager._isSmartLoginEnabled
+_OBJC_IVAR_$_FBSDKDeviceLoginManager._delegate
+_OBJC_IVAR_$_FBSDKDeviceLoginManager._permissions
+_OBJC_IVAR_$_FBSDKDeviceLoginManager._redirectURL
+/Users/calvinaquino/Projects/Planejador Pessoal/Carthage/Checkouts/facebook-objc-sdk/FBSDKLoginKit/FBSDKLoginKit/FBSDKDeviceLoginManager.m
+FBSDKLoginKit/FBSDKDeviceLoginManager.m
+FBSDKLoginKit/FBSDKDeviceLoginManager.h
+__41-[FBSDKDeviceLoginManager _schedulePoll:]_block_invoke_2
+__41-[FBSDKDeviceLoginManager _schedulePoll:]_block_invoke
+__destroy_helper_block_e8_32s40s48s
+__copy_helper_block_e8_32s40s48b
+__40-[FBSDKDeviceLoginManager _notifyToken:]_block_invoke.105
+__40-[FBSDKDeviceLoginManager _notifyToken:]_block_invoke
+__destroy_helper_block_e8_32s
+__copy_helper_block_e8_32s
+__32-[FBSDKDeviceLoginManager start]_block_invoke
+-[FBSDKDeviceLoginManagerResult initWithToken:isCancelled:]
+-[FBSDKDeviceLoginManagerResult accessToken]
+-[FBSDKDeviceLoginManagerResult isCancelled]
+-[FBSDKDeviceLoginManagerResult .cxx_destruct]
+_OBJC_IVAR_$_FBSDKDeviceLoginManagerResult._cancelled
+_OBJC_IVAR_$_FBSDKDeviceLoginManagerResult._accessToken
+/Users/calvinaquino/Projects/Planejador Pessoal/Carthage/Checkouts/facebook-objc-sdk/FBSDKLoginKit/FBSDKLoginKit/FBSDKDeviceLoginManagerResult.m
+FBSDKLoginKit/FBSDKDeviceLoginManagerResult.m
+FBSDKLoginKit/FBSDKDeviceLoginManagerResult.h
