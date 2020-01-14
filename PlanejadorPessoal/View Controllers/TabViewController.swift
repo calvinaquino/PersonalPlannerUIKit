@@ -14,10 +14,10 @@ class TabViewController: UITabBarController {
     super.viewDidLoad()
     
     let shoppingListViewController = UINavigationController(rootViewController: ShoppingListViewController())
-    shoppingListViewController.tabBarItem = UITabBarItem(title: "Lista de compras", image: UIImage(named: "first"), tag: 0)
+    shoppingListViewController.tabBarItem = UITabBarItem(title: "Mercado", image: UIImage(systemName: "cart"), tag: 0)
 
     let financesPlannerViewController = UINavigationController(rootViewController: FinancesPlannerViewController())
-    financesPlannerViewController.tabBarItem = UITabBarItem(title: "Planejador financeiro", image: UIImage(named: "second"), tag: 1)
+    financesPlannerViewController.tabBarItem = UITabBarItem(title: "Finanças", image: UIImage(systemName: "dollarsign.circle"), tag: 1)
 
     let tabBarList = [shoppingListViewController, financesPlannerViewController]
 

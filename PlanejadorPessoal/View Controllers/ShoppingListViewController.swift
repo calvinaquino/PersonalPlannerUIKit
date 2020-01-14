@@ -8,12 +8,14 @@
 
 import UIKit
 
-class ShoppingListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ShoppingListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchResultsUpdating, UITextFieldDelegate {
   
   var items: [ShoppingItem] = []
+  var filteredItems: [ShoppingItem] = []
   let cellReuseIdentifier = "cell"
   var tableView: UITableView!
   var refreshControl: UIRefreshControl!
+  var searchController: UISearchController!
   
   // MARK: - LifeCycle Functions
   
@@ -38,7 +40,7 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
   // MARK: - Setup Functions
   
   func setupNavigationBar() {
-    self.title = "Lista de compras"
+    self.title = "Mercado"
     self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(showNewItemDialog))
   }
   
@@ -51,7 +53,16 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
     
     self.refreshControl = UIRefreshControl()
     refreshControl.addTarget(self, action: #selector(fetchData), for: UIControl.Event.valueChanged)
-    self.tableView.addSubview(refreshControl) // not required when using UITableViewController
+    self.tableView.addSubview(refreshControl)
+    
+    self.searchController = UISearchController(searchResultsController: nil)
+    self.searchController.searchResultsUpdater = self
+    self.searchController.obscuresBackgroundDuringPresentation = false
+    self.searchController.searchBar.sizeToFit()
+    self.searchController.searchBar.searchTextField.delegate = self
+    self.searchController.searchBar.searchTextField.returnKeyType = .done
+
+    self.navigationItem.searchController = self.searchController
     
     self.view.addSubview(self.tableView)
   }
@@ -64,12 +75,25 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
       if self.refreshControl.isRefreshing {
         self.refreshControl.endRefreshing()
       }
-      self.tableView.reloadData()
+      self.reloadData()
     }
   }
   
   func nameAlreadyExists(name: String) -> Bool {
     return self.items.filter{ $0.name == name }.first == nil
+  }
+  
+  func getItems() -> [ShoppingItem] {
+    return self.searchController.isActive ? self.filteredItems : self.items
+  }
+  
+  func reloadData() {
+    if searchController.isActive {
+      let searchPredicate = NSPredicate(format: "SELF CONTAINS[c] %@", searchController.searchBar.text!)
+      self.filteredItems = searchController.searchBar.text!.count > 0 ?
+        self.items.filter({searchPredicate.evaluate(with: $0.name)}) : self.items
+    }
+    self.tableView.reloadData()
   }
   
   func showErrorAler(message: String) {
@@ -93,10 +117,10 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
   
   @objc func removeItem(at row: Int) {
     self.items.remove(at: row)
-    self.tableView.reloadData()
+    self.reloadData()
   }
   
-  @objc func showNewItemDialog() {
+  @objc func showNewItemDialog(itemName: String?) {
     let alert = UIAlertController(title: "Novo item", message: "Insira os dados do item:", preferredStyle: UIAlertController.Style.alert )
     
     let save = UIAlertAction(title: "Finalizar", style: .default) { (alertAction) in
@@ -124,6 +148,9 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
     
     alert.addTextField { (textField) in
       textField.placeholder = "Nome"
+      if let name = itemName {
+        textField.text = name
+      }
     }
     alert.addTextField { (textField) in
       textField.placeholder = "Nome em inglês (opcional)"
@@ -142,15 +169,15 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
   // MARK: - UITableViewDeletate, UITableViewDataSource
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return items.count
+    return self.searchController.isActive ? self.filteredItems.count : self.items.count
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     if let cell = self.tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) {
-      let shoppingItem = self.items[indexPath.row]
+      let shoppingItem = self.getItems()[indexPath.row]
       cell.textLabel?.text = shoppingItem.name
       cell.detailTextLabel?.text = "\(shoppingItem.price!)" // works but label is not visible
-      cell.accessoryType = shoppingItem.isNeeded.boolValue ? .checkmark : .none
+      cell.accessoryView = shoppingItem.isNeeded.boolValue ? UIImageView(image: UIImage(systemName: "cube.box")) : UIImageView(image: UIImage(systemName: "cube.box.fill"))
       return cell
     }
     
@@ -160,7 +187,7 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     let cell = self.tableView.cellForRow(at: indexPath)
     cell?.isSelected = false
-    let shoppingItem = self.items[indexPath.row]
+    let shoppingItem = self.getItems()[indexPath.row]
     shoppingItem.isNeeded = NSNumber(value: !shoppingItem.isNeeded.boolValue)
     shoppingItem.saveInBackground().continueOnSuccessWith { (_) -> Any? in
       self.fetchData()
@@ -169,7 +196,7 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
   
   func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
     if (editingStyle == .delete) {
-      let shoppingItem = self.items[indexPath.row]
+      let shoppingItem = self.getItems()[indexPath.row]
       shoppingItem.deleteInBackground { (success: Bool, error: Error?) in
         if let error = error {
           print(error.localizedDescription)
@@ -178,5 +205,22 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
         }
       }
     }
+  }
+  
+  // MARK: - UISearchResultsUpdating
+  
+  func updateSearchResults(for searchController: UISearchController) {
+    self.reloadData()
+  }
+  
+  // MARK: - UITextFieldDelegate
+  
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    if let searchText = textField.text {
+      if searchText.count > 0 && self.filteredItems.count == 0 {
+        self.showNewItemDialog(itemName: searchText)
+      }
+    }
+    return true
   }
 }
