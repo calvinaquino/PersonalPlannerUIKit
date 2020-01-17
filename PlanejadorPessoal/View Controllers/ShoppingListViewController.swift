@@ -12,7 +12,6 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
   
   var items: [ShoppingItem] = []
   var filteredItems: [ShoppingItem] = []
-  let cellReuseIdentifier = "cell"
   var tableView: UITableView!
   var refreshControl: UIRefreshControl!
   var searchController: UISearchController!
@@ -41,12 +40,12 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
   
   func setupNavigationBar() {
     self.title = "Mercado"
-    self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(showNewItemDialog))
+    self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(newItemTapped))
   }
   
   func setupTableView() {
     self.tableView = UITableView()
-    self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+    self.tableView.register(ShoppingItemCell.self, forCellReuseIdentifier: ShoppingItemCell.Identifier)
     self.tableView.tableFooterView = UIView()
     tableView.delegate = self
     tableView.dataSource = self
@@ -96,13 +95,6 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
     self.tableView.reloadData()
   }
   
-  func showErrorAler(message: String) {
-    let alert = UIAlertController(title: "Erro", message: message, preferredStyle: UIAlertController.Style.alert)
-    let okAction = UIAlertAction(title: "OK", style: .cancel) { (alertAction) in }
-    alert.addAction(okAction)
-    self.present(alert, animated:true, completion: nil)
-  }
-  
   // MARK:-  CRUD Functions
   
   @objc func newItem(name: String, localizedName: String?, price: NSNumber?) {
@@ -120,7 +112,11 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
     self.reloadData()
   }
   
-  @objc func showNewItemDialog(itemName: String?) {
+  @objc func newItemTapped() {
+    self.showNewItemDialog()
+  }
+  
+  @objc func showNewItemDialog(itemName: String? = nil) {
     let alert = UIAlertController(title: "Novo item", message: "Insira os dados do item:", preferredStyle: UIAlertController.Style.alert )
     
     let save = UIAlertAction(title: "Finalizar", style: .default) { (alertAction) in
@@ -136,11 +132,11 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
             }
           } else {
             // error name already exists
-            self.showErrorAler(message: "Nome já existe.")
+            ErrorUtils.showErrorAler(message: "Nome já existe.")
           }
         } else {
           // error name missing
-          self.showErrorAler(message: "Campo do nome vazio.")
+          ErrorUtils.showErrorAler(message: "Campo do nome vazio.")
         }
       }
       
@@ -173,20 +169,18 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    if let cell = self.tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) {
-      let shoppingItem = self.getItems()[indexPath.row]
-      cell.textLabel?.text = shoppingItem.name
-      cell.detailTextLabel?.text = "\(shoppingItem.price!)" // works but label is not visible
-      cell.accessoryView = shoppingItem.isNeeded.boolValue ? UIImageView(image: UIImage(systemName: "cube.box")) : UIImageView(image: UIImage(systemName: "cube.box.fill"))
-      return cell
-    }
+    let cell = self.tableView.dequeueReusableCell(withIdentifier: ShoppingItemCell.Identifier, for: indexPath) as! ShoppingItemCell
     
-    return UITableViewCell()
+    let shoppingItem = self.getItems()[indexPath.row]
+    cell.textLabel?.text = shoppingItem.name
+    cell.detailTextLabel?.text = "\(shoppingItem.price!)"
+    cell.detailTextLabel?.textColor = .gray
+    cell.accessoryView = shoppingItem.isNeeded.boolValue ? UIImageView(image: UIImage(systemName: "cube.box")) : UIImageView(image: UIImage(systemName: "cube.box.fill"))
+    return cell
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    let cell = self.tableView.cellForRow(at: indexPath)
-    cell?.isSelected = false
+    self.tableView.deselectRow(at: indexPath, animated: true)
     let shoppingItem = self.getItems()[indexPath.row]
     shoppingItem.isNeeded = NSNumber(value: !shoppingItem.isNeeded.boolValue)
     shoppingItem.saveInBackground().continueOnSuccessWith { (_) -> Any? in

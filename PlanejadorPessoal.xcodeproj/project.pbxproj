@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		98880EE223D0173600A54315 /* ViewUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98880EE123D0173600A54315 /* ViewUtils.swift */; };
+		98880EE423D024A500A54315 /* TransactionCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98880EE323D024A500A54315 /* TransactionCategory.swift */; };
 		9889218723CB9B41009AB805 /* ParseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9889218223CB9B41009AB805 /* ParseUI.framework */; };
 		9889218823CB9B41009AB805 /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9889218323CB9B41009AB805 /* ParseFacebookUtilsV4.framework */; };
 		9889218923CB9B41009AB805 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9889218423CB9B41009AB805 /* Parse.framework */; };
@@ -21,6 +23,11 @@
 		988921D723CC1B96009AB805 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988921D623CC1B96009AB805 /* DatabaseManager.swift */; };
 		988921DE23CC1C6D009AB805 /* ShoppingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988921DD23CC1C6D009AB805 /* ShoppingItem.swift */; };
 		988921E023CC50CB009AB805 /* EditShoppingItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988921DF23CC50CB009AB805 /* EditShoppingItemViewController.swift */; };
+		98CCB0BE23CD517500CA8C1B /* ErrorUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98CCB0BD23CD517500CA8C1B /* ErrorUtils.swift */; };
+		98CCB0C023CD5CE100CA8C1B /* ShoppingItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98CCB0BF23CD5CE100CA8C1B /* ShoppingItemCell.swift */; };
+		98CCB0C223CD602800CA8C1B /* TransactionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98CCB0C123CD602800CA8C1B /* TransactionItem.swift */; };
+		98CCB0C423CD619000CA8C1B /* TransactionItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98CCB0C323CD619000CA8C1B /* TransactionItemCell.swift */; };
+		98CCB0C623CD64C000CA8C1B /* CalendarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98CCB0C523CD64C000CA8C1B /* CalendarManager.swift */; };
 		98EDEFAA23CA80AD00C70424 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98EDEFA923CA80AD00C70424 /* AppDelegate.swift */; };
 		98EDEFAC23CA80AD00C70424 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98EDEFAB23CA80AD00C70424 /* SceneDelegate.swift */; };
 		98EDEFAE23CA80AD00C70424 /* TabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98EDEFAD23CA80AD00C70424 /* TabViewController.swift */; };
@@ -49,6 +56,8 @@
 
 /* Begin PBXFileReference section */
 		9861C9A923CB97970070F05F /* PlanejadorPessoal.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PlanejadorPessoal.entitlements; sourceTree = "<group>"; };
+		98880EE123D0173600A54315 /* ViewUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewUtils.swift; sourceTree = "<group>"; };
+		98880EE323D024A500A54315 /* TransactionCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCategory.swift; sourceTree = "<group>"; };
 		9889218223CB9B41009AB805 /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseUI.framework; sourceTree = "<group>"; };
 		9889218323CB9B41009AB805 /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
 		9889218423CB9B41009AB805 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
@@ -63,6 +72,11 @@
 		988921D623CC1B96009AB805 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		988921DD23CC1C6D009AB805 /* ShoppingItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingItem.swift; sourceTree = "<group>"; };
 		988921DF23CC50CB009AB805 /* EditShoppingItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditShoppingItemViewController.swift; sourceTree = "<group>"; };
+		98CCB0BD23CD517500CA8C1B /* ErrorUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorUtils.swift; sourceTree = "<group>"; };
+		98CCB0BF23CD5CE100CA8C1B /* ShoppingItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingItemCell.swift; sourceTree = "<group>"; };
+		98CCB0C123CD602800CA8C1B /* TransactionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionItem.swift; sourceTree = "<group>"; };
+		98CCB0C323CD619000CA8C1B /* TransactionItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionItemCell.swift; sourceTree = "<group>"; };
+		98CCB0C523CD64C000CA8C1B /* CalendarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarManager.swift; sourceTree = "<group>"; };
 		98EDEFA623CA80AD00C70424 /* PlanejadorPessoal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlanejadorPessoal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		98EDEFA923CA80AD00C70424 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		98EDEFAB23CA80AD00C70424 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -131,6 +145,7 @@
 		988921D823CC1BB5009AB805 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				98CCB0C523CD64C000CA8C1B /* CalendarManager.swift */,
 				988921D623CC1B96009AB805 /* DatabaseManager.swift */,
 				988921DC23CC1C4D009AB805 /* Models */,
 			);
@@ -171,8 +186,28 @@
 			isa = PBXGroup;
 			children = (
 				988921DD23CC1C6D009AB805 /* ShoppingItem.swift */,
+				98CCB0C123CD602800CA8C1B /* TransactionItem.swift */,
+				98880EE323D024A500A54315 /* TransactionCategory.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		98CCB0BB23CD511E00CA8C1B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				98CCB0BF23CD5CE100CA8C1B /* ShoppingItemCell.swift */,
+				98CCB0C323CD619000CA8C1B /* TransactionItemCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		98CCB0BC23CD514D00CA8C1B /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				98CCB0BD23CD517500CA8C1B /* ErrorUtils.swift */,
+				98880EE123D0173600A54315 /* ViewUtils.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		98EDEF9D23CA80AD00C70424 = {
@@ -202,7 +237,9 @@
 				9861C9A923CB97970070F05F /* PlanejadorPessoal.entitlements */,
 				988921D923CC1BC2009AB805 /* Root Delegates */,
 				988921DA23CC1BD5009AB805 /* View Controllers */,
+				98CCB0BB23CD511E00CA8C1B /* Views */,
 				988921D823CC1BB5009AB805 /* Data */,
+				98CCB0BC23CD514D00CA8C1B /* Utils */,
 				988921DB23CC1BE8009AB805 /* Supporting Files */,
 			);
 			path = PlanejadorPessoal;
@@ -395,14 +432,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				98880EE223D0173600A54315 /* ViewUtils.swift in Sources */,
+				98CCB0C223CD602800CA8C1B /* TransactionItem.swift in Sources */,
+				98CCB0C023CD5CE100CA8C1B /* ShoppingItemCell.swift in Sources */,
 				9889219723CB9E09009AB805 /* FinancesPlannerViewController.swift in Sources */,
 				9889219523CB9DF8009AB805 /* ShoppingListViewController.swift in Sources */,
 				988921D723CC1B96009AB805 /* DatabaseManager.swift in Sources */,
+				98CCB0C423CD619000CA8C1B /* TransactionItemCell.swift in Sources */,
 				988921E023CC50CB009AB805 /* EditShoppingItemViewController.swift in Sources */,
+				98CCB0BE23CD517500CA8C1B /* ErrorUtils.swift in Sources */,
 				98EDEFAA23CA80AD00C70424 /* AppDelegate.swift in Sources */,
 				988921DE23CC1C6D009AB805 /* ShoppingItem.swift in Sources */,
 				98EDEFAC23CA80AD00C70424 /* SceneDelegate.swift in Sources */,
 				98EDEFAE23CA80AD00C70424 /* TabViewController.swift in Sources */,
+				98CCB0C623CD64C000CA8C1B /* CalendarManager.swift in Sources */,
+				98880EE423D024A500A54315 /* TransactionCategory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

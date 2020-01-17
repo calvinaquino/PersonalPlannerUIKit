@@ -17,7 +17,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
   
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-    // Override point for customization after application launch.
+    
+    ShoppingItem.registerSubclass()
+    TransactionItem.registerSubclass()
+    
     let configuration = ParseClientConfiguration {
       $0.applicationId = "0z5F3IL3II8MdllpO09MtGqnXoUA9Jqlq5jtftxN"
       $0.clientKey = "nT7eXhKNJcBTMb8DlsdOwJAlhndYkYtI432iyxce"

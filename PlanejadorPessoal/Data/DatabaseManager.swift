@@ -14,7 +14,7 @@ class DatabaseManager {
     if let query = ShoppingItem.query() {
       query.findObjectsInBackground { (results: [PFObject]?, error: Error?) in
         if let error = error {
-            print(error.localizedDescription)
+          ErrorUtils.showErrorAler(message: error.localizedDescription)
         } else {
           if let results = results as? [ShoppingItem] {
             completion(results)
@@ -24,17 +24,19 @@ class DatabaseManager {
     }
   }
   
-  class func fetchFinances(completion: @escaping ([ShoppingItem]) -> Void) {
-//    if let query = ShoppingItem.query() {
-//      query.findObjectsInBackground { (results: [PFObject]?, error: Error?) in
-//        if let error = error {
-//            print(error.localizedDescription)
-//        } else {
-//          if let results = results as? [ShoppingItem] {
-//            completion(results)
-//          }
-//        }
-//      }
-//    }
+  class func fetchFinances(for month: Int, year: Int, completion: @escaping ([TransactionItem]) -> Void) {
+    if let query = TransactionItem.query() {
+      query.whereKey("month", equalTo: month)
+      query.whereKey("year", equalTo: year)
+      query.findObjectsInBackground { (results: [PFObject]?, error: Error?) in
+        if let error = error {
+          ErrorUtils.showErrorAler(message: error.localizedDescription)
+        } else {
+          if let results = results as? [TransactionItem] {
+            completion(results)
+          }
+        }
+      }
+    }
   }
 }
