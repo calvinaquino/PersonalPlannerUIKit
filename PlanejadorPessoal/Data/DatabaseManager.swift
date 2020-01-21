@@ -29,12 +29,24 @@ class DatabaseManager {
       PFObject.pinAll(inBackground: budgetCategories)
       DatabaseManager.fetchTransactionsList(for: month, year: year) { (transactionItems) in
         var sections: [BudgetSection] = []
+        let generalCategory = BudgetCategory()
+        generalCategory.name = "Geral"
+        generalCategory.budget = 0
+        let generalSection = BudgetSection(category: generalCategory, transactions: transactionItems.filter({
+          ($0.budgetCategory == nil)
+        }))
+        if generalSection.transactions.count > 0 {
+          sections.append(generalSection)
+        }
         for category in budgetCategories {
           let section = BudgetSection(category: category, transactions: transactionItems.filter({
             ($0.budgetCategory != nil) ? $0.budgetCategory.name == category.name : false
           }))
-          sections.append(section)
+          if section.transactions.count > 0 {
+            sections.append(section)
+          }
         }
+        
         completion(sections)
       }
     }

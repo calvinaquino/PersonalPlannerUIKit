@@ -8,8 +8,16 @@
 
 import Foundation
 
-extension Double {
-  var stringCurrency: String {
+protocol NumberConvertible {
+  var numberValue: NSNumber { get }
+}
+
+protocol CurrencyConvertible {
+  var currencyString: String { get }
+}
+
+extension Double: NumberConvertible, CurrencyConvertible {
+  var currencyString: String {
     String(format: "%.2f", self)
   }
   
@@ -18,8 +26,24 @@ extension Double {
   }
 }
 
-extension NSNumber {
-  var stringCurrency: String {
+extension NSNumber: CurrencyConvertible {
+  var currencyString: String {
     String(format: "%.2f", self.doubleValue)
+  }
+}
+
+extension Int: NumberConvertible, CurrencyConvertible {
+  var numberValue: NSNumber {
+    NSNumber(value: self)
+  }
+  
+  var currencyString: String {
+    String(format: "%.2f", self)
+  }
+}
+
+extension String: NumberConvertible {
+  var numberValue: NSNumber {
+    return NSNumber(value: Double(self) ?? 0)
   }
 }

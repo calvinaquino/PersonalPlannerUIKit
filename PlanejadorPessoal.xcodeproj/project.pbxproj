@@ -23,7 +23,9 @@
 		988921D723CC1B96009AB805 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988921D623CC1B96009AB805 /* DatabaseManager.swift */; };
 		988921DE23CC1C6D009AB805 /* ShoppingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988921DD23CC1C6D009AB805 /* ShoppingItem.swift */; };
 		988921E023CC50CB009AB805 /* TransactionItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988921DF23CC50CB009AB805 /* TransactionItemViewController.swift */; };
+		9890FA3423D69F6600D9DBAE /* BudgetCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9890FA3323D69F6600D9DBAE /* BudgetCategoryCell.swift */; };
 		989F26F023D3CB8600B3EEED /* ConversionUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989F26EF23D3CB8600B3EEED /* ConversionUtils.swift */; };
+		989F26F423D69BDC00B3EEED /* BudgetCategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989F26F323D69BDC00B3EEED /* BudgetCategoriesViewController.swift */; };
 		98CCB0BE23CD517500CA8C1B /* ErrorUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98CCB0BD23CD517500CA8C1B /* ErrorUtils.swift */; };
 		98CCB0C023CD5CE100CA8C1B /* ShoppingItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98CCB0BF23CD5CE100CA8C1B /* ShoppingItemCell.swift */; };
 		98CCB0C223CD602800CA8C1B /* TransactionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98CCB0C123CD602800CA8C1B /* TransactionItem.swift */; };
@@ -73,7 +75,9 @@
 		988921D623CC1B96009AB805 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		988921DD23CC1C6D009AB805 /* ShoppingItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingItem.swift; sourceTree = "<group>"; };
 		988921DF23CC50CB009AB805 /* TransactionItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionItemViewController.swift; sourceTree = "<group>"; };
+		9890FA3323D69F6600D9DBAE /* BudgetCategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetCategoryCell.swift; sourceTree = "<group>"; };
 		989F26EF23D3CB8600B3EEED /* ConversionUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionUtils.swift; sourceTree = "<group>"; };
+		989F26F323D69BDC00B3EEED /* BudgetCategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetCategoriesViewController.swift; sourceTree = "<group>"; };
 		98CCB0BD23CD517500CA8C1B /* ErrorUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorUtils.swift; sourceTree = "<group>"; };
 		98CCB0BF23CD5CE100CA8C1B /* ShoppingItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingItemCell.swift; sourceTree = "<group>"; };
 		98CCB0C123CD602800CA8C1B /* TransactionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionItem.swift; sourceTree = "<group>"; };
@@ -170,6 +174,7 @@
 				9889219423CB9DF8009AB805 /* ShoppingListViewController.swift */,
 				9889219623CB9E09009AB805 /* FinancesPlannerViewController.swift */,
 				988921DF23CC50CB009AB805 /* TransactionItemViewController.swift */,
+				989F26F323D69BDC00B3EEED /* BudgetCategoriesViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -199,6 +204,7 @@
 			children = (
 				98CCB0BF23CD5CE100CA8C1B /* ShoppingItemCell.swift */,
 				98CCB0C323CD619000CA8C1B /* TransactionItemCell.swift */,
+				9890FA3323D69F6600D9DBAE /* BudgetCategoryCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -438,6 +444,8 @@
 				98880EE223D0173600A54315 /* ViewUtils.swift in Sources */,
 				98CCB0C223CD602800CA8C1B /* TransactionItem.swift in Sources */,
 				98CCB0C023CD5CE100CA8C1B /* ShoppingItemCell.swift in Sources */,
+				989F26F423D69BDC00B3EEED /* BudgetCategoriesViewController.swift in Sources */,
+				9890FA3423D69F6600D9DBAE /* BudgetCategoryCell.swift in Sources */,
 				9889219723CB9E09009AB805 /* FinancesPlannerViewController.swift in Sources */,
 				9889219523CB9DF8009AB805 /* ShoppingListViewController.swift in Sources */,
 				988921D723CC1B96009AB805 /* DatabaseManager.swift in Sources */,

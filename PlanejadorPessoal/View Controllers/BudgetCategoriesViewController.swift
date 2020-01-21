@@ -1,17 +1,17 @@
 //
-//  ShoppingListViewController.swift
-//  Planejador Pessoal
+//  BudgetCategoriesViewController.swift
+//  PlanejadorPessoal
 //
-//  Created by Calvin Gonçalves de Aquino on 1/11/20.
+//  Created by Calvin Gonçalves de Aquino on 1/20/20.
 //  Copyright © 2020 Calvin Gonçalves de Aquino. All rights reserved.
 //
 
 import UIKit
 
-class ShoppingListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchResultsUpdating, UITextFieldDelegate {
+class BudgetCategoriesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchResultsUpdating, UITextFieldDelegate {
   
-  var items: [ShoppingItem] = []
-  var filteredItems: [ShoppingItem] = []
+  var items: [BudgetCategory] = []
+  var filteredItems: [BudgetCategory] = []
   var tableView: UITableView!
   var refreshControl: UIRefreshControl!
   var searchController: UISearchController!
@@ -39,13 +39,13 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
   // MARK: - Setup Functions
   
   func setupNavigationBar() {
-    self.title = "Mercado"
+    self.title = "Categorias"
     self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(newItemTapped))
   }
   
   func setupTableView() {
     self.tableView = UITableView()
-    self.tableView.register(ShoppingItemCell.self, forCellReuseIdentifier: ShoppingItemCell.Identifier)
+    self.tableView.register(BudgetCategoryCell.self, forCellReuseIdentifier: BudgetCategoryCell.Identifier)
     self.tableView.tableFooterView = UIView()
     tableView.delegate = self
     tableView.dataSource = self
@@ -60,7 +60,7 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
     self.searchController.searchBar.sizeToFit()
     self.searchController.searchBar.searchTextField.delegate = self
     self.searchController.searchBar.searchTextField.returnKeyType = .done
-
+    
     self.navigationItem.searchController = self.searchController
     
     self.view.addSubview(self.tableView)
@@ -69,8 +69,8 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
   // MARK: - Helper Functions
   
   @objc func fetchData() {
-    DatabaseManager.fetchShoppingList { (shoppingItems) in
-      self.items = shoppingItems
+    DatabaseManager.fetchBudgetCategories{ (budgetCategories) in
+      self.items = budgetCategories
       if self.refreshControl.isRefreshing {
         self.refreshControl.endRefreshing()
       }
@@ -78,11 +78,15 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
     }
   }
   
-  func nameAlreadyExists(name: String) -> Bool {
-    return self.items.filter{ $0.name == name }.first == nil
+  func nameAlreadyExists(name: String, whitelist: [String]?) -> Bool {
+    if let whitelist = whitelist, whitelist.count > 0 {
+      let whitelisted = self.items.filter { !whitelist.contains($0.name)}
+      return whitelisted.filter{ $0.name == name }.first != nil
+    }
+    return self.items.filter{ $0.name == name }.first != nil
   }
   
-  func getItems() -> [ShoppingItem] {
+  func getItems() -> [BudgetCategory] {
     return self.searchController.isActive ? self.filteredItems : self.items
   }
   
@@ -97,12 +101,11 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
   
   // MARK:-  CRUD Functions
   
-  @objc func newItem(name: String, localizedName: String?, price: NSNumber?) {
-    let newShoppingItem = ShoppingItem()
-    newShoppingItem.name = name
-    newShoppingItem.localizedName = localizedName
-    newShoppingItem.price = price
-    newShoppingItem.saveInBackground().continueOnSuccessWith(block: { (_) -> Any? in
+  @objc func newItem(name: String, budget: NSNumber?) {
+    let newBudgetCategory = BudgetCategory()
+    newBudgetCategory.name = name
+    newBudgetCategory.budget = budget
+    newBudgetCategory.saveInBackground().continueOnSuccessWith(block: { (_) -> Any? in
       self.fetchData()
     })
   }
@@ -116,43 +119,53 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
     self.showNewItemDialog()
   }
   
+  @objc func showEditItemDialog(item: BudgetCategory) {
+    self.showItemDialog(itemName: nil, item: item)
+  }
+  
   @objc func showNewItemDialog(itemName: String? = nil) {
-    let alert = UIAlertController(title: "Novo item", message: "Insira os dados do item:", preferredStyle: UIAlertController.Style.alert )
+    self.showItemDialog(itemName: itemName, item: nil)
+  }
+  
+  func showItemDialog(itemName: String? = nil, item: BudgetCategory? = nil) {
+    let isEditing = item != nil
+    let title = isEditing ? "Editar item" : "Novo item"
+    let alert = UIAlertController(title: title, message: "Insira os dados do item:", preferredStyle: UIAlertController.Style.alert )
     
     let save = UIAlertAction(title: "Finalizar", style: .default) { (alertAction) in
       let nameTextField = alert.textFields![0] as UITextField
-      let localizedNameTextField = alert.textFields![1] as UITextField
-      let priceTextField = alert.textFields![2] as UITextField
-      
-      if let name = nameTextField.text {
-        if name != "" {
-          if self.nameAlreadyExists(name: name) {
-            if let localizedName = localizedNameTextField.text, let price = priceTextField.text {
-              self.newItem(name: name, localizedName: localizedName, price: price.numberValue)
-            }
-          } else {
-            // error name already exists
-            ErrorUtils.showErrorAler(message: "Nome já existe.")
+      let budgetTextField = alert.textFields![1] as UITextField
+      if let name = nameTextField.text, name != "", let budget = budgetTextField.text {
+        let nameAlreadyExists = self.nameAlreadyExists(name: name, whitelist: isEditing ? [item!.name] : nil)
+        if isEditing && !nameAlreadyExists, let item = item { // nameAlreadyExists needs to be checked but disregrd original name
+          item.name = name
+          item.budget = budget.numberValue
+          item.saveInBackground { (_,_) in
+            self.fetchData()
           }
+        } else if !nameAlreadyExists {
+          self.newItem(name: name, budget: NSNumber(value: Float(budget) ?? 0.0))
         } else {
-          // error name missing
-          ErrorUtils.showErrorAler(message: "Campo do nome vazio.")
+          ErrorUtils.showErrorAler(message: "Nome já existe.")
         }
+      } else {
+        ErrorUtils.showErrorAler(message: "Campo do nome vazio.")
       }
-      
     }
     
     alert.addTextField { (textField) in
       textField.placeholder = "Nome"
       if let name = itemName {
         textField.text = name
+      } else if isEditing {
+        textField.text = item!.name
       }
     }
     alert.addTextField { (textField) in
-      textField.placeholder = "Nome em inglês (opcional)"
-    }
-    alert.addTextField { (textField) in
-      textField.placeholder = "Preço (opcional)"
+      textField.placeholder = "Valor máximo"
+      if isEditing {
+        textField.text = item!.budget?.currencyString
+      }
     }
     
     alert.addAction(save)
@@ -169,29 +182,25 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = self.tableView.dequeueReusableCell(withIdentifier: ShoppingItemCell.Identifier, for: indexPath) as! ShoppingItemCell
+    let cell = self.tableView.dequeueReusableCell(withIdentifier: BudgetCategoryCell.Identifier, for: indexPath) as! BudgetCategoryCell
     
-    let shoppingItem = self.getItems()[indexPath.row]
-    cell.textLabel?.text = shoppingItem.name
-    cell.detailTextLabel?.text = shoppingItem.price?.currencyString
+    let budgetCategory = self.getItems()[indexPath.row]
+    cell.textLabel?.text = budgetCategory.name
+    cell.detailTextLabel?.text = budgetCategory.budget?.currencyString
     cell.detailTextLabel?.textColor = .gray
-    cell.accessoryView = shoppingItem.isNeeded.boolValue ? UIImageView(image: UIImage(systemName: "cube.box")) : UIImageView(image: UIImage(systemName: "cube.box.fill"))
     return cell
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     self.tableView.deselectRow(at: indexPath, animated: true)
-    let shoppingItem = self.getItems()[indexPath.row]
-    shoppingItem.isNeeded = NSNumber(value: !shoppingItem.isNeeded.boolValue)
-    shoppingItem.saveInBackground().continueOnSuccessWith { (_) -> Any? in
-      self.fetchData()
-    }
+    let budgetCategory = self.getItems()[indexPath.row]
+    self.showEditItemDialog(item: budgetCategory)
   }
   
   func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
     if (editingStyle == .delete) {
-      let shoppingItem = self.getItems()[indexPath.row]
-      shoppingItem.deleteInBackground { (success: Bool, error: Error?) in
+      let budgetCtegory = self.getItems()[indexPath.row]
+      budgetCtegory.deleteInBackground { (success: Bool, error: Error?) in
         if let error = error {
           print(error.localizedDescription)
         } else if success {
@@ -218,3 +227,4 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
     return true
   }
 }
+

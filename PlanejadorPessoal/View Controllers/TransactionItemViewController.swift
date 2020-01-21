@@ -6,6 +6,13 @@
 //  Copyright © 2020 Calvin Gonçalves de Aquino. All rights reserved.
 //
 
+
+/*
+ Planejamento de metas
+ diz o quanto que custaria
+ quanto juntar por mes
+ */
+
 import UIKit
 
 let TransactionCreatedNotification = Notification.Name("TransactionCreated")
@@ -65,10 +72,6 @@ class TransactionItemViewController: UIViewController, UITextFieldDelegate, UIPi
     self.priceTextField.keyboardType = .decimalPad
   }
   
-  func withNavigation() -> UIViewController {
-    UINavigationController(rootViewController: self)
-  }
-  
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     DatabaseManager.fetchBudgetCategories { (budgetCategories) in
@@ -77,8 +80,8 @@ class TransactionItemViewController: UIViewController, UITextFieldDelegate, UIPi
       
       if let transactionItem = self.transactionItem {
         self.nameTextField.text = transactionItem.name
-        self.priceTextField.text = transactionItem.value.stringCurrency
-        let row = self.budgetCategories.firstIndex { $0.objectId == transactionItem.budgetCategory.objectId}
+        self.priceTextField.text = transactionItem.value.currencyString
+        let row = transactionItem.budgetCategory != nil ? self.budgetCategories.firstIndex { $0.objectId == transactionItem.budgetCategory.objectId}?.advanced(by: 1) : 0
         self.categoryPicker.selectRow(row!, inComponent: 0, animated: true)
       }
     }
@@ -113,8 +116,8 @@ class TransactionItemViewController: UIViewController, UITextFieldDelegate, UIPi
     if self.transactionItem == nil {
       // new item
       transactionItem = TransactionItem()
-      transactionItem.month = NSNumber(value: self.month!)
-      transactionItem.year = NSNumber(value: self.year!)
+      transactionItem.month = self.month!.numberValue
+      transactionItem.year = self.year!.numberValue
     } else {
       // existing item
       transactionItem = self.transactionItem
@@ -122,7 +125,8 @@ class TransactionItemViewController: UIViewController, UITextFieldDelegate, UIPi
     transactionItem.name = self.nameTextField.text
     let priceValue = Double(self.priceTextField.text ?? "0")
     transactionItem.value = priceValue?.numberValue
-    transactionItem.budgetCategory = self.budgetCategories[self.categoryPicker.selectedRow(inComponent: 0)]
+    let selectedBudgetRow = self.categoryPicker.selectedRow(inComponent: 0)
+    transactionItem.budgetCategory = selectedBudgetRow != 0 ? self.budgetCategories[selectedBudgetRow - 1] : nil
     transactionItem.saveInBackground { (success, error) in
       self.dismiss(animated: true) {
         NotificationCenter.default.post(name: TransactionCreatedNotification, object: nil)
@@ -150,12 +154,15 @@ class TransactionItemViewController: UIViewController, UITextFieldDelegate, UIPi
   }
   
   func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-    self.budgetCategories.count
+    self.budgetCategories.count + 1
   }
   
   func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-    let budgetCatetory = self.budgetCategories[row]
-    return "\(budgetCatetory.name!) (\(budgetCatetory.budget!.stringCurrency))"
+    if (row == 0) {
+      return "Geral ( - )"
+    }
+    let budgetCatetory = self.budgetCategories[row - 1]
+    return "\(budgetCatetory.name!) (\(budgetCatetory.budget!.currencyString))"
   }
   
 }

@@ -51,15 +51,14 @@ class FinancesPlannerViewController: UIViewController, UITableViewDelegate, UITa
   func setupNavigationBar() {
     self.title = "Finanças"
     self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(newItemTapped))
+    self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "slider.horizontal.3"), style: .plain, target: self, action: #selector(openBudgetCategoriesOptions))
     self.navigationController?.setToolbarHidden(false, animated: false)
     
     let previousMonthItem = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .plain, target: self, action: #selector(previousMonth))
     let nextMonthItem = UIBarButtonItem(image: UIImage(systemName: "chevron.right"), style: .plain, target: self, action: #selector(nextMonth))
     
     self.monthName = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-    self.monthName.isEnabled = false
-    self.totalValueBarItem = UIBarButtonItem(title: "0.00", style: .plain, target: nil, action: nil)
-    self.totalValueBarItem.isEnabled = false
+    self.totalValueBarItem = UIBarButtonItem(title: "0.00", style: .plain, target: self, action: #selector(askSendRemainingToNextMonth))
     
     self.toolbarItems = [previousMonthItem, UIBarButtonItem.flexibleSpace, self.monthName, UIBarButtonItem.flexibleSpace, self.totalValueBarItem, UIBarButtonItem.flexibleSpace, nextMonthItem]
     self.navigationController?.toolbar.clipsToBounds = true;
@@ -90,6 +89,11 @@ class FinancesPlannerViewController: UIViewController, UITableViewDelegate, UITa
   
   // MARK: - Helper Functions
   
+  @objc func openBudgetCategoriesOptions() {
+    let budgetCategoriesViewController = BudgetCategoriesViewController()
+    self.navigationController?.pushViewController(budgetCategoriesViewController, animated: true)
+  }
+  
   @objc func fetchData() {
     DatabaseManager.fetchFinances(for: calendar.month, year: calendar.year) { (transactionItems) in
       self.items = transactionItems
@@ -98,6 +102,27 @@ class FinancesPlannerViewController: UIViewController, UITableViewDelegate, UITa
       }
       self.reloadData()
     }
+  }
+  
+  @objc func askSendRemainingToNextMonth() {
+    let alert = UIAlertController(title: "Mensagem", message: "Gostaria de enviar esse valor como sobra para o próximo mês?", preferredStyle: UIAlertController.Style.alert )
+    
+    let yes = UIAlertAction(title: "Sim", style: .default) { (alertAction) in
+      let monthLeftOverTransaction = TransactionItem()
+      self.calendar.nextMonth()
+      monthLeftOverTransaction.month = self.calendar.month!.numberValue
+      monthLeftOverTransaction.year = self.calendar.year!.numberValue
+      self.calendar.previousMonth()
+      monthLeftOverTransaction.name = "Sobra mes anterior"
+      monthLeftOverTransaction.value = self.items.totalTransactions.numberValue
+      monthLeftOverTransaction.saveInBackground()
+    }
+    alert.addAction(yes)
+    
+    let cancel = UIAlertAction(title: "Não", style: .cancel) { (alertAction) in }
+    alert.addAction(cancel)
+    
+    self.present(alert, animated: true, completion: nil)
   }
   
   @objc func nextMonth() {
@@ -115,7 +140,7 @@ class FinancesPlannerViewController: UIViewController, UITableViewDelegate, UITa
   }
   
   func getTotal() -> String {
-    self.items.totalTransactions.stringCurrency
+    self.items.totalTransactions.currencyString
   }
   
   @objc func reloadData() {
@@ -134,8 +159,8 @@ class FinancesPlannerViewController: UIViewController, UITableViewDelegate, UITa
     let newTransactionItem = TransactionItem()
     newTransactionItem.name = name
     newTransactionItem.value = price ?? 0
-    newTransactionItem.month = month ?? NSNumber(value: calendar.month)
-    newTransactionItem.year = year ?? NSNumber(value: calendar.year)
+    newTransactionItem.month = month ?? calendar.month.numberValue
+    newTransactionItem.year = year ?? calendar.year.numberValue
     newTransactionItem.saveInBackground().continueOnSuccessWith(block: { (_) -> Any? in
       self.fetchData()
     })
@@ -174,7 +199,7 @@ class FinancesPlannerViewController: UIViewController, UITableViewDelegate, UITa
     let cell = self.tableView.dequeueReusableCell(withIdentifier: TransactionItemCell.Identifier, for: indexPath) as! TransactionItemCell
     let transactionItem = self.sections.transaction(at: indexPath)
     cell.textLabel?.text = transactionItem.name
-    cell.detailTextLabel?.text = "\(transactionItem.value!)"
+    cell.detailTextLabel?.text = transactionItem.value!.currencyString
     cell.detailTextLabel?.textColor = .gray
     return cell
   }
@@ -201,8 +226,13 @@ class FinancesPlannerViewController: UIViewController, UITableViewDelegate, UITa
   
   func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
     let section = self.sections[section]
+    let sectionForTotal = self.items.filter { $0.category.objectId == section.category.objectId }.first
     let category = section.category
-    return "\(category.name!) - \(section.total.stringCurrency)/\(category.budget!.stringCurrency)"
+    if category.name == "Geral" {
+      return category.name!
+    }
+    let remaining = category.budget!.doubleValue + sectionForTotal!.total
+    return "\(category.name!)  (\(remaining.currencyString))"
   }
   
   // MARK: - UISearchResultsUpdating

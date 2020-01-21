@@ -247,3 +247,9 @@ extension UIBarButtonItem {
     UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
   }
 }
+
+extension UIViewController {
+  func withNavigation() -> UIViewController {
+    UINavigationController(rootViewController: self)
+  }
+}
