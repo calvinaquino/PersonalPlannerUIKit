@@ -10,6 +10,8 @@ import UIKit
 
 //Convenience
 extension UIView {
+  
+  // MARK: - Layout Anchor Convenience
   //single anchor convenience
   @discardableResult
   func topAnchor(_ anchor:NSLayoutAnchor<NSLayoutYAxisAnchor>) -> NSLayoutConstraint {
@@ -42,7 +44,7 @@ extension UIView {
   
   @discardableResult
   func leftAnchor(_ anchor:NSLayoutAnchor<NSLayoutXAxisAnchor>, constant: CGFloat) -> NSLayoutConstraint {
-    let constraint = self.leadingAnchor.constraint(equalTo: anchor, constant: constant)
+    let constraint = self.leftAnchor.constraint(equalTo: anchor, constant: constant)
     constraint.isActive = true
     return constraint
   }
@@ -54,7 +56,7 @@ extension UIView {
   
   @discardableResult
   func rightAnchor(_ anchor:NSLayoutAnchor<NSLayoutXAxisAnchor>, constant: CGFloat) -> NSLayoutConstraint {
-    let constraint = self.trailingAnchor.constraint(equalTo: anchor, constant: -constant)
+    let constraint = self.rightAnchor.constraint(equalTo: anchor, constant: -constant)
     constraint.isActive = true
     return constraint
   }
@@ -166,6 +168,78 @@ extension UIView {
     let heightConstraint = heightAnchor(constant: height)
     return (widthConstraint, heightConstraint)
   }
+  
+  // MARK: - Frame Convenience
+  var left: CGFloat {
+    set {
+      self.frame.origin.x = newValue
+    }
+    get {
+      self.frame.origin.x
+    }
+  }
+
+  var top: CGFloat {
+    set {
+      self.frame.origin.y = newValue
+    }
+    get {
+      self.frame.origin.y
+    }
+  }
+
+  var right: CGFloat {
+    set {
+      self.frame.size.width = newValue - self.left
+    }
+    get {
+      self.left + self.frame.size.width
+    }
+  }
+  
+  var bottom: CGFloat {
+    set {
+      self.frame.size.height = newValue - self.top
+    }
+    get {
+      self.top + self.frame.size.height
+    }
+  }
+  
+  var width: CGFloat {
+    set {
+      self.frame.size.width = newValue
+    }
+    get {
+      self.frame.size.width
+    }
+  }
+  
+  var height: CGFloat {
+    set {
+      self.frame.size.height = newValue
+    }
+    get {
+      self.frame.size.height
+    }
+  }
+  
+  var safeAreaTop: CGFloat {
+    self.safeAreaInsets.top
+  }
+  
+  var safeAreaBottom: CGFloat {
+    self.safeAreaInsets.bottom
+  }
+  
+  var safeAreaLeft: CGFloat {
+    self.safeAreaInsets.left
+  }
+  
+  var safeAreaRight: CGFloat {
+    self.safeAreaInsets.right
+  }
+  
 }
 
 extension UIBarButtonItem {

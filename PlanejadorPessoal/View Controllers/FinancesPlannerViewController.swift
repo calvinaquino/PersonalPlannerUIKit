@@ -10,8 +10,8 @@ import UIKit
 
 class FinancesPlannerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchResultsUpdating, UITextFieldDelegate {
   
-  var items: [TransactionItem] = []
-  var filteredItems: [TransactionItem] = []
+  var items: [BudgetSection] = []
+  var filteredItems: [BudgetSection] = []
   let cellReuseIdentifier = "cell"
   var tableView: UITableView!
   var refreshControl: UIRefreshControl!
@@ -19,6 +19,10 @@ class FinancesPlannerViewController: UIViewController, UITableViewDelegate, UITa
   var monthName: UIBarButtonItem!
   var totalValueBarItem: UIBarButtonItem!
   let calendar: CalendarManager = CalendarManager()
+  
+  var sections: [BudgetSection] {
+    self.searchController.isActive ? self.filteredItems : self.items
+  }
   
   // MARK: - LifeCycle Functions
   
@@ -28,6 +32,8 @@ class FinancesPlannerViewController: UIViewController, UITableViewDelegate, UITa
     
     self.setupNavigationBar()
     self.setupTableView()
+    
+    NotificationCenter.default.addObserver(self, selector: #selector(fetchData), name: TransactionCreatedNotification, object: nil)
   }
   
   override func viewDidAppear(_ animated: Bool) {
@@ -108,24 +114,14 @@ class FinancesPlannerViewController: UIViewController, UITableViewDelegate, UITa
     self.monthName.title = calendar.currentMonthAndYear()
   }
   
-  func nameAlreadyExists(name: String) -> Bool {
-    return self.items.filter{ $0.name == name }.first == nil
-  }
-  
   func getTotal() -> String {
-    let total = self.items.reduce(0) { $1.value.doubleValue + $0 }
-    return String(format: "%.2f", total)
+    self.items.totalTransactions.stringCurrency
   }
   
-  func getItems() -> [TransactionItem] {
-    return self.searchController.isActive ? self.filteredItems : self.items
-  }
-  
-  func reloadData() {
+  @objc func reloadData() {
     if searchController.isActive {
-      let searchPredicate = NSPredicate(format: "SELF CONTAINS[c] %@", searchController.searchBar.text!)
       self.filteredItems = searchController.searchBar.text!.count > 0 ?
-        self.items.filter({searchPredicate.evaluate(with: $0.name)}) : self.items
+        self.items.filterTransactions(with: searchController.searchBar.text!) : self.items
     }
     self.updateCurrentMonthName()
     self.totalValueBarItem.title = self.getTotal()
@@ -151,54 +147,32 @@ class FinancesPlannerViewController: UIViewController, UITableViewDelegate, UITa
   }
   
   @objc func newItemTapped() {
-    self.showNewItemDialog()
+    self.openTransactionItemForm(forItem: nil)
   }
   
-  @objc func showNewItemDialog(itemName: String? = nil) {
-    let alert = UIAlertController(title: "Nova transação", message: "Insira os dados da transação:", preferredStyle: UIAlertController.Style.alert )
-    
-    let save = UIAlertAction(title: "Finalizar", style: .default) { (alertAction) in
-      let nameTextField = alert.textFields![0] as UITextField
-      let priceTextField = alert.textFields![1] as UITextField
-//      let monthTextField = alert.textFields![2] as UITextField
-      
-      if let name = nameTextField.text, let price = priceTextField.text {
-        if name != "" && price != "" {
-          self.newItem(name: name, price: NSNumber(value: Float(price) ?? 0.0), month: NSNumber(value: self.calendar.month), year: NSNumber(value: self.calendar.year))
-        } else {
-          ErrorUtils.showErrorAler(message: "Campo do nome ou preço vazios.")
-        }
-      }
-      
+  @objc func openTransactionItemForm(forItem item: TransactionItem? = nil) {
+    var transactionItemViewControler: TransactionItemViewController!
+    if let item = item {
+      transactionItemViewControler = TransactionItemViewController(transactionItem: item)
+    } else {
+      transactionItemViewControler = TransactionItemViewController(month: self.calendar.month, year: self.calendar.year)
     }
-    
-    alert.addTextField { (textField) in
-      textField.placeholder = "Nome"
-      if let name = itemName {
-        textField.text = name
-      }
-    }
-    alert.addTextField { (textField) in
-      textField.placeholder = "Preço"
-    }
-    
-    alert.addAction(save)
-    let cancel = UIAlertAction(title: "Cancelar", style: .cancel) { (alertAction) in }
-    alert.addAction(cancel)
-    
-    self.present(alert, animated:true, completion: nil)
+    self.present(transactionItemViewControler.withNavigation(), animated: true, completion: nil)
   }
   
   // MARK: - UITableViewDeletate, UITableViewDataSource
   
+  func numberOfSections(in tableView: UITableView) -> Int {
+    self.sections.count
+  }
+  
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return self.searchController.isActive ? self.filteredItems.count : self.items.count
+    self.sections[section].transactions.count
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = self.tableView.dequeueReusableCell(withIdentifier: TransactionItemCell.Identifier, for: indexPath) as! TransactionItemCell
-    
-    let transactionItem = self.getItems()[indexPath.row]
+    let transactionItem = self.sections.transaction(at: indexPath)
     cell.textLabel?.text = transactionItem.name
     cell.detailTextLabel?.text = "\(transactionItem.value!)"
     cell.detailTextLabel?.textColor = .gray
@@ -207,15 +181,14 @@ class FinancesPlannerViewController: UIViewController, UITableViewDelegate, UITa
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     self.tableView.deselectRow(at: indexPath, animated: true)
-//    let TransactionItem = self.getItems()[indexPath.row]
-//    TransactionItem.saveInBackground().continueOnSuccessWith { (_) -> Any? in
-//      self.fetchData()
-//    }
+    let transactionItem = self.sections.transaction(at: indexPath)
+    let transactionItemViewControler = TransactionItemViewController(transactionItem: transactionItem)
+    self.present(transactionItemViewControler.withNavigation(), animated: true, completion: nil)
   }
   
   func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
     if (editingStyle == .delete) {
-      let transactionItem = self.getItems()[indexPath.row]
+      let transactionItem = self.sections.transaction(at: indexPath)
       transactionItem.deleteInBackground { (success: Bool, error: Error?) in
         if let error = error {
           print(error.localizedDescription)
@@ -226,6 +199,12 @@ class FinancesPlannerViewController: UIViewController, UITableViewDelegate, UITa
     }
   }
   
+  func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    let section = self.sections[section]
+    let category = section.category
+    return "\(category.name!) - \(section.total.stringCurrency)/\(category.budget!.stringCurrency)"
+  }
+  
   // MARK: - UISearchResultsUpdating
   
   func updateSearchResults(for searchController: UISearchController) {
@@ -234,12 +213,12 @@ class FinancesPlannerViewController: UIViewController, UITableViewDelegate, UITa
   
   // MARK: - UITextFieldDelegate
   
-  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-    if let searchText = textField.text {
-      if searchText.count > 0 && self.filteredItems.count == 0 {
-        self.showNewItemDialog(itemName: searchText)
-      }
-    }
-    return true
-  }
+//  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+//    if let searchText = textField.text {
+//      if searchText.count > 0 && self.filteredItems.count == 0 {
+//        self.showNewItemDialog(itemName: searchText)
+//      }
+//    }
+//    return true
+//  }
 }

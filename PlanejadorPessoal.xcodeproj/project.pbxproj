@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		98880EE223D0173600A54315 /* ViewUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98880EE123D0173600A54315 /* ViewUtils.swift */; };
-		98880EE423D024A500A54315 /* TransactionCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98880EE323D024A500A54315 /* TransactionCategory.swift */; };
+		98880EE423D024A500A54315 /* BudgetCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98880EE323D024A500A54315 /* BudgetCategory.swift */; };
 		9889218723CB9B41009AB805 /* ParseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9889218223CB9B41009AB805 /* ParseUI.framework */; };
 		9889218823CB9B41009AB805 /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9889218323CB9B41009AB805 /* ParseFacebookUtilsV4.framework */; };
 		9889218923CB9B41009AB805 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9889218423CB9B41009AB805 /* Parse.framework */; };
@@ -22,7 +22,8 @@
 		9889219723CB9E09009AB805 /* FinancesPlannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9889219623CB9E09009AB805 /* FinancesPlannerViewController.swift */; };
 		988921D723CC1B96009AB805 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988921D623CC1B96009AB805 /* DatabaseManager.swift */; };
 		988921DE23CC1C6D009AB805 /* ShoppingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988921DD23CC1C6D009AB805 /* ShoppingItem.swift */; };
-		988921E023CC50CB009AB805 /* EditShoppingItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988921DF23CC50CB009AB805 /* EditShoppingItemViewController.swift */; };
+		988921E023CC50CB009AB805 /* TransactionItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988921DF23CC50CB009AB805 /* TransactionItemViewController.swift */; };
+		989F26F023D3CB8600B3EEED /* ConversionUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989F26EF23D3CB8600B3EEED /* ConversionUtils.swift */; };
 		98CCB0BE23CD517500CA8C1B /* ErrorUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98CCB0BD23CD517500CA8C1B /* ErrorUtils.swift */; };
 		98CCB0C023CD5CE100CA8C1B /* ShoppingItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98CCB0BF23CD5CE100CA8C1B /* ShoppingItemCell.swift */; };
 		98CCB0C223CD602800CA8C1B /* TransactionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98CCB0C123CD602800CA8C1B /* TransactionItem.swift */; };
@@ -57,7 +58,7 @@
 /* Begin PBXFileReference section */
 		9861C9A923CB97970070F05F /* PlanejadorPessoal.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PlanejadorPessoal.entitlements; sourceTree = "<group>"; };
 		98880EE123D0173600A54315 /* ViewUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewUtils.swift; sourceTree = "<group>"; };
-		98880EE323D024A500A54315 /* TransactionCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCategory.swift; sourceTree = "<group>"; };
+		98880EE323D024A500A54315 /* BudgetCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetCategory.swift; sourceTree = "<group>"; };
 		9889218223CB9B41009AB805 /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseUI.framework; sourceTree = "<group>"; };
 		9889218323CB9B41009AB805 /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
 		9889218423CB9B41009AB805 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
@@ -71,7 +72,8 @@
 		9889219623CB9E09009AB805 /* FinancesPlannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinancesPlannerViewController.swift; sourceTree = "<group>"; };
 		988921D623CC1B96009AB805 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		988921DD23CC1C6D009AB805 /* ShoppingItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingItem.swift; sourceTree = "<group>"; };
-		988921DF23CC50CB009AB805 /* EditShoppingItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditShoppingItemViewController.swift; sourceTree = "<group>"; };
+		988921DF23CC50CB009AB805 /* TransactionItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionItemViewController.swift; sourceTree = "<group>"; };
+		989F26EF23D3CB8600B3EEED /* ConversionUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionUtils.swift; sourceTree = "<group>"; };
 		98CCB0BD23CD517500CA8C1B /* ErrorUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorUtils.swift; sourceTree = "<group>"; };
 		98CCB0BF23CD5CE100CA8C1B /* ShoppingItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingItemCell.swift; sourceTree = "<group>"; };
 		98CCB0C123CD602800CA8C1B /* TransactionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionItem.swift; sourceTree = "<group>"; };
@@ -167,7 +169,7 @@
 				98EDEFAD23CA80AD00C70424 /* TabViewController.swift */,
 				9889219423CB9DF8009AB805 /* ShoppingListViewController.swift */,
 				9889219623CB9E09009AB805 /* FinancesPlannerViewController.swift */,
-				988921DF23CC50CB009AB805 /* EditShoppingItemViewController.swift */,
+				988921DF23CC50CB009AB805 /* TransactionItemViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -187,7 +189,7 @@
 			children = (
 				988921DD23CC1C6D009AB805 /* ShoppingItem.swift */,
 				98CCB0C123CD602800CA8C1B /* TransactionItem.swift */,
-				98880EE323D024A500A54315 /* TransactionCategory.swift */,
+				98880EE323D024A500A54315 /* BudgetCategory.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -206,6 +208,7 @@
 			children = (
 				98CCB0BD23CD517500CA8C1B /* ErrorUtils.swift */,
 				98880EE123D0173600A54315 /* ViewUtils.swift */,
+				989F26EF23D3CB8600B3EEED /* ConversionUtils.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -439,14 +442,15 @@
 				9889219523CB9DF8009AB805 /* ShoppingListViewController.swift in Sources */,
 				988921D723CC1B96009AB805 /* DatabaseManager.swift in Sources */,
 				98CCB0C423CD619000CA8C1B /* TransactionItemCell.swift in Sources */,
-				988921E023CC50CB009AB805 /* EditShoppingItemViewController.swift in Sources */,
+				989F26F023D3CB8600B3EEED /* ConversionUtils.swift in Sources */,
+				988921E023CC50CB009AB805 /* TransactionItemViewController.swift in Sources */,
 				98CCB0BE23CD517500CA8C1B /* ErrorUtils.swift in Sources */,
 				98EDEFAA23CA80AD00C70424 /* AppDelegate.swift in Sources */,
 				988921DE23CC1C6D009AB805 /* ShoppingItem.swift in Sources */,
 				98EDEFAC23CA80AD00C70424 /* SceneDelegate.swift in Sources */,
 				98EDEFAE23CA80AD00C70424 /* TabViewController.swift in Sources */,
 				98CCB0C623CD64C000CA8C1B /* CalendarManager.swift in Sources */,
-				98880EE423D024A500A54315 /* TransactionCategory.swift in Sources */,
+				98880EE423D024A500A54315 /* BudgetCategory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

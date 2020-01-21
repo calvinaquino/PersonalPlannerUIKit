@@ -20,6 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     ShoppingItem.registerSubclass()
     TransactionItem.registerSubclass()
+    BudgetCategory.registerSubclass()
     
     let configuration = ParseClientConfiguration {
       $0.applicationId = "0z5F3IL3II8MdllpO09MtGqnXoUA9Jqlq5jtftxN"

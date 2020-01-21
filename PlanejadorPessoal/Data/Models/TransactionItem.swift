@@ -18,4 +18,14 @@ class TransactionItem: PFObject, PFSubclassing {
   @NSManaged var value: NSNumber!
   @NSManaged var month: NSNumber!
   @NSManaged var year: NSNumber!
+  @NSManaged var budgetCategory: BudgetCategory!
+  
+//  var budgetCategory: BudgetCategory? {
+//    get {
+//      self.value(forKey: "budgetCategory") as? BudgetCategory
+//    }
+//    set {
+//      self.setValue(newValue, forKey: "budgetCategory")
+//    }
+//  }
 }

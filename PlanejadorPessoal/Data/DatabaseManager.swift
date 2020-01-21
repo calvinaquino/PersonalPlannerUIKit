@@ -24,15 +24,46 @@ class DatabaseManager {
     }
   }
   
-  class func fetchFinances(for month: Int, year: Int, completion: @escaping ([TransactionItem]) -> Void) {
+  class func fetchFinances(for month: Int, year: Int, completion: @escaping ([BudgetSection]) -> Void) {
+    DatabaseManager.fetchBudgetCategories { (budgetCategories) in
+      PFObject.pinAll(inBackground: budgetCategories)
+      DatabaseManager.fetchTransactionsList(for: month, year: year) { (transactionItems) in
+        var sections: [BudgetSection] = []
+        for category in budgetCategories {
+          let section = BudgetSection(category: category, transactions: transactionItems.filter({
+            ($0.budgetCategory != nil) ? $0.budgetCategory.name == category.name : false
+          }))
+          sections.append(section)
+        }
+        completion(sections)
+      }
+    }
+  }
+  
+  class func fetchTransactionsList(for month: Int, year: Int, completion: @escaping ([TransactionItem]) -> Void) {
     if let query = TransactionItem.query() {
       query.whereKey("month", equalTo: month)
       query.whereKey("year", equalTo: year)
+      query.includeKey("budgetCategory")
       query.findObjectsInBackground { (results: [PFObject]?, error: Error?) in
         if let error = error {
           ErrorUtils.showErrorAler(message: error.localizedDescription)
         } else {
           if let results = results as? [TransactionItem] {
+            completion(results)
+          }
+        }
+      }
+    }
+  }
+  
+  class func fetchBudgetCategories(completion: @escaping ([BudgetCategory]) -> Void) {
+    if let query = BudgetCategory.query() {
+      query.findObjectsInBackground { (results: [PFObject]?, error: Error?) in
+        if let error = error {
+          ErrorUtils.showErrorAler(message: error.localizedDescription)
+        } else {
+          if let results = results as? [BudgetCategory] {
             completion(results)
           }
         }
