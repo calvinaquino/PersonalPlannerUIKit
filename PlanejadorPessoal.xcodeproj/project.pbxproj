@@ -24,6 +24,7 @@
 		988921DE23CC1C6D009AB805 /* ShoppingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988921DD23CC1C6D009AB805 /* ShoppingItem.swift */; };
 		988921E023CC50CB009AB805 /* TransactionItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988921DF23CC50CB009AB805 /* TransactionItemViewController.swift */; };
 		9890FA3423D69F6600D9DBAE /* BudgetCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9890FA3323D69F6600D9DBAE /* BudgetCategoryCell.swift */; };
+		9890FA3623D6D35B00D9DBAE /* ShoppingCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9890FA3523D6D35B00D9DBAE /* ShoppingCategory.swift */; };
 		989F26F023D3CB8600B3EEED /* ConversionUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989F26EF23D3CB8600B3EEED /* ConversionUtils.swift */; };
 		989F26F423D69BDC00B3EEED /* BudgetCategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989F26F323D69BDC00B3EEED /* BudgetCategoriesViewController.swift */; };
 		98CCB0BE23CD517500CA8C1B /* ErrorUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98CCB0BD23CD517500CA8C1B /* ErrorUtils.swift */; };
@@ -76,6 +77,7 @@
 		988921DD23CC1C6D009AB805 /* ShoppingItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingItem.swift; sourceTree = "<group>"; };
 		988921DF23CC50CB009AB805 /* TransactionItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionItemViewController.swift; sourceTree = "<group>"; };
 		9890FA3323D69F6600D9DBAE /* BudgetCategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetCategoryCell.swift; sourceTree = "<group>"; };
+		9890FA3523D6D35B00D9DBAE /* ShoppingCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingCategory.swift; sourceTree = "<group>"; };
 		989F26EF23D3CB8600B3EEED /* ConversionUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionUtils.swift; sourceTree = "<group>"; };
 		989F26F323D69BDC00B3EEED /* BudgetCategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetCategoriesViewController.swift; sourceTree = "<group>"; };
 		98CCB0BD23CD517500CA8C1B /* ErrorUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorUtils.swift; sourceTree = "<group>"; };
@@ -195,6 +197,7 @@
 				988921DD23CC1C6D009AB805 /* ShoppingItem.swift */,
 				98CCB0C123CD602800CA8C1B /* TransactionItem.swift */,
 				98880EE323D024A500A54315 /* BudgetCategory.swift */,
+				9890FA3523D6D35B00D9DBAE /* ShoppingCategory.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -453,6 +456,7 @@
 				989F26F023D3CB8600B3EEED /* ConversionUtils.swift in Sources */,
 				988921E023CC50CB009AB805 /* TransactionItemViewController.swift in Sources */,
 				98CCB0BE23CD517500CA8C1B /* ErrorUtils.swift in Sources */,
+				9890FA3623D6D35B00D9DBAE /* ShoppingCategory.swift in Sources */,
 				98EDEFAA23CA80AD00C70424 /* AppDelegate.swift in Sources */,
 				988921DE23CC1C6D009AB805 /* ShoppingItem.swift in Sources */,
 				98EDEFAC23CA80AD00C70424 /* SceneDelegate.swift in Sources */,

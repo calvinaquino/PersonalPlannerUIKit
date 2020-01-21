@@ -18,4 +18,5 @@ class ShoppingItem: PFObject, PFSubclassing {
   @NSManaged var localizedName: String?
   @NSManaged var price: NSNumber?
   @NSManaged var isNeeded: NSNumber!
+  @NSManaged var shoppingCategory: ShoppingCategory?
 }
