@@ -10,22 +10,15 @@ import Foundation
 import Parse
 
 class TransactionItem: PFObject, PFSubclassing {
-  static func parseClassName() -> String {
-    "TransactionItem"
-  }
-  
-  @NSManaged var name: String!
-  @NSManaged var value: NSNumber!
-  @NSManaged var month: NSNumber!
-  @NSManaged var year: NSNumber!
-  @NSManaged var budgetCategory: BudgetCategory!
-  
-//  var budgetCategory: BudgetCategory? {
-//    get {
-//      self.value(forKey: "budgetCategory") as? BudgetCategory
-//    }
-//    set {
-//      self.setValue(newValue, forKey: "budgetCategory")
-//    }
-//  }
+    static func parseClassName() -> String {
+        "TransactionItem"
+    }
+    
+    @NSManaged var name: String!
+    @NSManaged var location: String!
+    @NSManaged var value: NSNumber!
+    @NSManaged var day: NSNumber!
+    @NSManaged var month: NSNumber!
+    @NSManaged var year: NSNumber!
+    @NSManaged var budgetCategory: BudgetCategory!
 }

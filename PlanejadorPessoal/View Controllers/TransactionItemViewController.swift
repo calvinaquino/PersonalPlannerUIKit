@@ -69,7 +69,7 @@ class TransactionItemViewController: UIViewController, UITextFieldDelegate, UIPi
     self.nameTextField.placeholder = "Nome da transação"
     
     self.priceTextField.placeholder = "Preço da transação"
-    self.priceTextField.keyboardType = .decimalPad
+    self.priceTextField.keyboardType = .numbersAndPunctuation
   }
   
   override func viewWillAppear(_ animated: Bool) {

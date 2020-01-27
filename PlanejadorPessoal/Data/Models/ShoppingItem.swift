@@ -20,3 +20,4 @@ class ShoppingItem: PFObject, PFSubclassing {
   @NSManaged var isNeeded: NSNumber!
   @NSManaged var shoppingCategory: ShoppingCategory?
 }
+
