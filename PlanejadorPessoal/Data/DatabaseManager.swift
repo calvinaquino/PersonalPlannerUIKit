@@ -124,4 +124,12 @@ class DatabaseManager {
             }
         }
     }
+    
+    class func fetchShoppingCategories() -> [ShoppingCategory]? {
+        if let query = ShoppingCategory.query() {
+            return try? query.findObjects() as? [ShoppingCategory]
+        }
+        
+        return []
+    }
 }

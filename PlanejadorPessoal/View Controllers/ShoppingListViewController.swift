@@ -38,6 +38,7 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         self.tableView.frame = self.view.bounds
     }
     
@@ -117,13 +118,16 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     @objc func openShoppingItemForm(forItem item: ShoppingItem? = nil) {
-        var transactionItemViewControler: ShoppingItemViewController!
-        if let item = item {
-            transactionItemViewControler = ShoppingItemViewController(shoppingItem: item)
-        } else {
-            transactionItemViewControler = ShoppingItemViewController()
-        }
-        self.present(transactionItemViewControler.withNavigation(), animated: true, completion: nil)
+//        var transactionItemViewControler: ShoppingItemViewController!
+//        if let item = item {
+//            transactionItemViewControler = ShoppingItemViewController(shoppingItem: item)
+//        } else {
+//            transactionItemViewControler = ShoppingItemViewController()
+//        }
+//        self.present(transactionItemViewControler.withNavigation(), animated: true, completion: nil)
+        
+        let form = ItemFormViewController(item: item)
+        self.present(form.withNavigation(), animated: true, completion: nil)
     }
     
     // MARK: - UITableViewDeletate, UITableViewDataSource
@@ -150,10 +154,11 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.tableView.deselectRow(at: indexPath, animated: true)
         let shoppingItem = self.sections.item(at: indexPath)
-        shoppingItem.isNeeded = NSNumber(value: !shoppingItem.isNeeded.boolValue)
-        shoppingItem.saveInBackground().continueOnSuccessWith { (_) -> Any? in
-            self.fetchData()
-        }
+//        shoppingItem.isNeeded = NSNumber(value: !shoppingItem.isNeeded.boolValue)
+//        shoppingItem.saveInBackground().continueOnSuccessWith { (_) -> Any? in
+//            self.fetchData()
+//        }
+        self.openShoppingItemForm(forItem: shoppingItem)
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
