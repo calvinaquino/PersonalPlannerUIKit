@@ -111,6 +111,13 @@ class DatabaseManager {
         }
     }
     
+    class func fetchBudgetCategories() -> [BudgetCategory]? {
+        if let query = BudgetCategory.query() {
+            return try? query.findObjects() as? [BudgetCategory]
+        }
+        return []
+    }
+    
     class func fetchShoppingCategories(completion: @escaping ([ShoppingCategory]) -> Void) {
         if let query = ShoppingCategory.query() {
             query.findObjectsInBackground { (results: [PFObject]?, error: Error?) in

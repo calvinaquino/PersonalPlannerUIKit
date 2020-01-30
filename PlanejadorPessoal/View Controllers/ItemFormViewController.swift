@@ -8,6 +8,8 @@
 
 import UIKit
 
+let ItemCreatedNotification = Notification.Name("ItemCreated")
+
 class ItemFormViewController: FormViewController {
     
     var item: ShoppingItem?
@@ -36,30 +38,55 @@ class ItemFormViewController: FormViewController {
     // MARK: - Required By Subclass
     
     override func setupFormFields() -> [FormField] {
-        return [
-            FormField(name: "Nome", type: .TextInput, value: self.item?.name, didChange: {self.item?.name = $0}),
-            FormField(name: "Nome Inglês", type: .TextInput, value: self.item?.localizedName, didChange: {self.item?.localizedName = $0}),
-            FormField(name: "Preço", type: .TextInput, value: self.item?.price?.currencyString, didChange: {self.item?.price = $0.numberValue}),
-            FormField(name: "Categoria", type: .Selection, value: self.item?.shoppingCategory?.name, options: self.getCategoryOptions, didChange: {
-//                let selectedCategory = ShoppingCategory(withoutDataWithObjectId: $0)
-//                selectedCategory.fetchIfNeededInBackground { (_, error) in
-//                    self.fields[3].value = self.item?.shoppingCategory?.name
-//                    self.tableView.reloadData()
-//                }
-                self.item?.shoppingCategory = ShoppingCategory(withoutDataWithObjectId: $0)
-                self.item?.shoppingCategory?.fetchIfNeededInBackground(block: { (shoppingCategory, error) in
-                    self.fields[3].value = self.item?.shoppingCategory?.name
-                    self.tableView.reloadData()
-                })
+        // Name
+        var nameField = FormField(name: "Nome", type: .TextInput, value: self.item?.name)
+        nameField.didChange = {
+            self.fields[0].value = $0
+            self.tableView.reloadData()
+        }
+        // Name English
+        var nameLocalizedField = FormField(name: "Nome Inglês", type: .TextInput, value: self.item?.localizedName)
+        nameLocalizedField.didChange = {
+            self.fields[1].value = $0
+            self.tableView.reloadData()
+        }
+        // Price
+        var priceField = FormField(name: "Preço", type: .TextInput, value: self.item?.price?.currencyString)
+        priceField.didChange = {
+            self.fields[2].value = $0
+            self.tableView.reloadData()
+        }
+        // Category
+        var categoryField = FormField(name: "Categoria", type: .Selection, value: self.item?.shoppingCategory?.name, options: self.getCategoryOptions)
+        categoryField.didChange = {
+            let newCategory = ShoppingCategory(withoutDataWithObjectId: $0)
+            newCategory.fetchIfNeededInBackground(block: { (_, error) in
+                self.fields[3].value = newCategory.name
+                self.tableView.reloadData()
             })
+        }
+        return [
+            nameField,
+            nameLocalizedField,
+            priceField,
+            categoryField
         ]
     }
     
-    @objc override func save() {
-//        self.item
-        self.item?.saveInBackground(block: { (success, error) in
-            //
-        })
+    @objc override func onSave() {
+        if let item = self.item {
+            item.name = self.fields[0].value
+            item.localizedName = self.fields[1].value
+            item.price = self.fields[2].value?.numberValue
+            DatabaseManager.fetchShoppingCategories { (shoppingCategories) in
+                item.shoppingCategory = shoppingCategories.filter({ $0.name == self.fields[3].value }).first
+                item.saveInBackground(block: { (success, error) in
+                    self.dismiss(animated: true) {
+                        NotificationCenter.default.post(name: ItemCreatedNotification, object: nil)
+                    }
+                })
+            }
+        }
     }
 
 }

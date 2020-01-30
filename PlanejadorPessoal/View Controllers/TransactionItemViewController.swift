@@ -15,7 +15,7 @@
 
 import UIKit
 
-let TransactionCreatedNotification = Notification.Name("TransactionCreated")
+//let TransactionCreatedNotification = Notification.Name("TransactionCreated")
 
 class TransactionItemViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
   

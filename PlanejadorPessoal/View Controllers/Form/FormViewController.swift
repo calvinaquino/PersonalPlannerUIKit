@@ -53,11 +53,20 @@ class FormViewController: UIViewController, UITableViewDelegate, UITableViewData
         fatalError("\"setupFormFields\" needs implementation by subclass")
     }
     
-    @objc open func save() {
+    open func onSave() {
         fatalError("\"save\" needs implementation by subclass")
     }
     
     // MARK: - Helper Funtions
+    
+    @objc func save() {
+        for (index, field) in self.fields.enumerated() where field.type == .TextInput {
+            if let textField = self.getTextField(forTag: index) {
+                textField.resignFirstResponder()
+            }
+        }
+        self.onSave()
+    }
     
     @objc func cancel() {
       self.dismiss(animated: true, completion: nil)
