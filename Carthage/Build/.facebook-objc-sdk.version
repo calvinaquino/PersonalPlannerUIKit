@@ -7,12 +7,12 @@
   ],
   "tvOS" : [
     {
-      "name" : "FBSDKLoginKit",
-      "hash" : "a8cbd9f77205ad3faf52d5310fb1c3300e7e70ea15ea7b7605eda761d1e391ec"
-    },
-    {
       "name" : "FBSDKTVOSKit",
       "hash" : "4f087125b7ca9a41502f23b1fcb32a091fcad160c8a067c007de784a2926e2d4"
+    },
+    {
+      "name" : "FBSDKLoginKit",
+      "hash" : "a8cbd9f77205ad3faf52d5310fb1c3300e7e70ea15ea7b7605eda761d1e391ec"
     },
     {
       "name" : "FBSDKShareKit",

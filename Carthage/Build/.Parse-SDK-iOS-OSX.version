@@ -2,42 +2,42 @@
   "Mac" : [
     {
       "name" : "Parse",
-      "hash" : "a8844a6e20ccde9ba31060e9151ff197c75f5323d48596ef894ce21579a4cc1d"
+      "hash" : "3c4f7f7eb9eb684570eb01038da6734b64eb35b2e6f2a1125dcc102f51fa762f"
     }
   ],
   "watchOS" : [
     {
       "name" : "Parse",
-      "hash" : "3277158c1816c8760a12566cb913eeff88ac85889d9087dd2a8035e474e2328c"
+      "hash" : "4c0cb0d7212622d94526eb757f31f47a53b4865a1c073ed460c0429fa8b7b896"
     }
   ],
   "tvOS" : [
     {
       "name" : "ParseFacebookUtilsV4",
-      "hash" : "bd1cb30ae4fcfd13029bd168eb459970a4eb83d14ccea7f98a27bcfe4018f9fb"
+      "hash" : "cb7f06334362e9f84a179710fb199060e534454134c749099ab0b4b2a1b0deb6"
     },
     {
       "name" : "Parse",
-      "hash" : "c7cc18bcba6f4490b802f1b697e1bfb2b6819ca462d01c696bc1f7d0088b9830"
+      "hash" : "f1123039f55bacedbaf4aa30da0a57e1528fafc8d68d524ed622774546a7a87c"
     }
   ],
   "commitish" : "1.17.3",
   "iOS" : [
     {
       "name" : "ParseFacebookUtilsV4",
-      "hash" : "8ae6d1640c9f7a207be45fd9f8f6ff7a1a88d07afafc94b25ee40f9c5858918f"
+      "hash" : "d40f555cbe7f0f2815deb57c921f5ebe38a8ffcbbbffc253db85535bac842db3"
     },
     {
       "name" : "ParseTwitterUtils",
-      "hash" : "388ff8c5ef64f88d4f08f16f409d9ffd33975aea94d9c52c31d330e18f86050e"
+      "hash" : "e24c7407c488af38f6e6d2434689f3bfef235f7d50c7b19fbb6913357b262a4d"
     },
     {
       "name" : "ParseUI",
-      "hash" : "395a1c721fdd0ac2ba510d8d3d5bc6ac5f5fb62cf3057c634d0058f0996f02f0"
+      "hash" : "3605c4e9802e23e933e18e29704d7cc7df545595cd1851d45640323a10791951"
     },
     {
       "name" : "Parse",
-      "hash" : "db939f990cabcae29afba2d018776fd17c756ceea58f611a5b3b1abe9eede337"
+      "hash" : "dd3c7544974a7f3b97f5049da6bff13ba3ada7fecab1af89a731bd2c47a5894a"
     }
   ]
 }
