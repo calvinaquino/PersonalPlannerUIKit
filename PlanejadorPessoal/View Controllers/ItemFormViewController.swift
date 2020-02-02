@@ -28,9 +28,11 @@ class ItemFormViewController: FormViewController {
     
     func getCategoryOptions() -> [FieldOption] {
         if let categories = DatabaseManager.fetchShoppingCategories() {
-            return categories.map({ (shoppingCategory) -> FieldOption in
+            var fieldOptions = categories.map({ (shoppingCategory) -> FieldOption in
                 return FieldOption(id: shoppingCategory.objectId!, name: shoppingCategory.name)
             })
+            fieldOptions.append(FieldOption(id: "", name: "Geral"))
+            return fieldOptions
         }
         return []
     }
@@ -57,13 +59,18 @@ class ItemFormViewController: FormViewController {
             self.tableView.reloadData()
         }
         // Category
-        var categoryField = FormField(name: "Categoria", type: .Selection, value: self.item?.shoppingCategory?.name, options: self.getCategoryOptions)
+        var categoryField = FormField(name: "Categoria", type: .Selection, value: self.item?.shoppingCategory?.name ?? "Geral", options: self.getCategoryOptions)
         categoryField.didChange = {
-            let newCategory = ShoppingCategory(withoutDataWithObjectId: $0)
-            newCategory.fetchIfNeededInBackground(block: { (_, error) in
-                self.fields[3].value = newCategory.name
+            if $0 == "" {
+                self.fields[3].value = "Geral"
                 self.tableView.reloadData()
-            })
+            } else {
+                let newCategory = ShoppingCategory(withoutDataWithObjectId: $0)
+                newCategory.fetchIfNeededInBackground(block: { (_, error) in
+                    self.fields[3].value = newCategory.name
+                    self.tableView.reloadData()
+                })
+            }
         }
         return [
             nameField,

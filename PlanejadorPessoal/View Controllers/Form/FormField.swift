@@ -24,4 +24,5 @@ struct FormField {
     var value: String?
     var options: (() -> [FieldOption])?
     var didChange: ((String) -> Void)?
+    var valueFormat: ((String) -> String)?
 }

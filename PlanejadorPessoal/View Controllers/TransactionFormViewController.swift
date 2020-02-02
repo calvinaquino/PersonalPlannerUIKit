@@ -20,7 +20,12 @@ class TransactionFormViewController: FormViewController {
         if let item = transaction {
             self.transaction = item
         } else {
-            self.transaction = TransactionItem()
+            let newItem = TransactionItem()
+            newItem.value = 0
+            newItem.day = Calendar.current.component(.day, from: Date()).numberValue
+            newItem.month = (Calendar.current.component(.month, from: Date()) - 1).numberValue
+            newItem.year = Calendar.current.component(.year, from: Date()).numberValue
+            self.transaction = newItem
         }
     }
     
@@ -87,7 +92,7 @@ class TransactionFormViewController: FormViewController {
             self.tableView.reloadData()
         }
         // Price
-        var priceField = FormField(name: "Preço", type: .TextInput, value: self.transaction?.value.currencyString)
+        var priceField = FormField(name: "Preço", type: .TextInput, value: self.transaction?.value?.currencyString)
         priceField.didChange = {
             self.fields[1].value = $0
             self.tableView.reloadData()
@@ -102,7 +107,7 @@ class TransactionFormViewController: FormViewController {
             })
         }
         // Day
-        var dayField = FormField(name: "Dia", type: .Selection, value: self.transaction?.day.stringValue, options: self.getDays)
+        var dayField = FormField(name: "Dia", type: .Selection, value: self.transaction?.day?.stringValue, options: self.getDays)
         dayField.didChange = {
             self.fields[3].value = $0
             self.tableView.reloadData()
@@ -112,6 +117,9 @@ class TransactionFormViewController: FormViewController {
         monthField.didChange = {
             self.fields[4].value = $0
             self.tableView.reloadData()
+        }
+        monthField.valueFormat = {
+            DateFormatter().monthSymbols[Int($0)!]
         }
         // Year
         var yearField = FormField(name: "Ano", type: .Selection, value: self.transaction?.year.stringValue, options: self.getYears)

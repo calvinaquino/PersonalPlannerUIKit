@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		44317A5823E671A4003D854A /* ShoppingCategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44317A5723E671A4003D854A /* ShoppingCategoriesViewController.swift */; };
+		44317A5A23E671E2003D854A /* ShoppingCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44317A5923E671E2003D854A /* ShoppingCategoryCell.swift */; };
 		982DEAD623E00D75006FC3AC /* FormSelectionPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982DEAD523E00D75006FC3AC /* FormSelectionPickerViewController.swift */; };
 		986074A623DFCEF30014B153 /* FormTextInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986074A523DFCEF30014B153 /* FormTextInputCell.swift */; };
 		986074A823DFD07E0014B153 /* FormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986074A723DFD07E0014B153 /* FormViewController.swift */; };
@@ -29,7 +31,6 @@
 		9889219723CB9E09009AB805 /* FinancesPlannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9889219623CB9E09009AB805 /* FinancesPlannerViewController.swift */; };
 		988921D723CC1B96009AB805 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988921D623CC1B96009AB805 /* DatabaseManager.swift */; };
 		988921DE23CC1C6D009AB805 /* ShoppingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988921DD23CC1C6D009AB805 /* ShoppingItem.swift */; };
-		988921E023CC50CB009AB805 /* TransactionItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988921DF23CC50CB009AB805 /* TransactionItemViewController.swift */; };
 		9890FA3423D69F6600D9DBAE /* BudgetCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9890FA3323D69F6600D9DBAE /* BudgetCategoryCell.swift */; };
 		9890FA3623D6D35B00D9DBAE /* ShoppingCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9890FA3523D6D35B00D9DBAE /* ShoppingCategory.swift */; };
 		989F26F023D3CB8600B3EEED /* ConversionUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989F26EF23D3CB8600B3EEED /* ConversionUtils.swift */; };
@@ -67,6 +68,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		44317A5723E671A4003D854A /* ShoppingCategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingCategoriesViewController.swift; sourceTree = "<group>"; };
+		44317A5923E671E2003D854A /* ShoppingCategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingCategoryCell.swift; sourceTree = "<group>"; };
 		982DEAD523E00D75006FC3AC /* FormSelectionPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormSelectionPickerViewController.swift; sourceTree = "<group>"; };
 		986074A523DFCEF30014B153 /* FormTextInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormTextInputCell.swift; sourceTree = "<group>"; };
 		986074A723DFD07E0014B153 /* FormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormViewController.swift; sourceTree = "<group>"; };
@@ -90,7 +93,6 @@
 		9889219623CB9E09009AB805 /* FinancesPlannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinancesPlannerViewController.swift; sourceTree = "<group>"; };
 		988921D623CC1B96009AB805 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		988921DD23CC1C6D009AB805 /* ShoppingItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingItem.swift; sourceTree = "<group>"; };
-		988921DF23CC50CB009AB805 /* TransactionItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionItemViewController.swift; sourceTree = "<group>"; };
 		9890FA3323D69F6600D9DBAE /* BudgetCategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetCategoryCell.swift; sourceTree = "<group>"; };
 		9890FA3523D6D35B00D9DBAE /* ShoppingCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingCategory.swift; sourceTree = "<group>"; };
 		989F26EF23D3CB8600B3EEED /* ConversionUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionUtils.swift; sourceTree = "<group>"; };
@@ -204,8 +206,8 @@
 				98EDEFAD23CA80AD00C70424 /* TabViewController.swift */,
 				9889219423CB9DF8009AB805 /* ShoppingListViewController.swift */,
 				9889219623CB9E09009AB805 /* FinancesPlannerViewController.swift */,
-				988921DF23CC50CB009AB805 /* TransactionItemViewController.swift */,
 				989F26F323D69BDC00B3EEED /* BudgetCategoriesViewController.swift */,
+				44317A5723E671A4003D854A /* ShoppingCategoriesViewController.swift */,
 				986074AC23DFD6DA0014B153 /* ItemFormViewController.swift */,
 				98EBB78D23E1541B00D97270 /* TransactionFormViewController.swift */,
 				986074A923DFD3CD0014B153 /* Form */,
@@ -240,6 +242,7 @@
 				98CCB0BF23CD5CE100CA8C1B /* ShoppingItemCell.swift */,
 				98CCB0C323CD619000CA8C1B /* TransactionItemCell.swift */,
 				9890FA3323D69F6600D9DBAE /* BudgetCategoryCell.swift */,
+				44317A5923E671E2003D854A /* ShoppingCategoryCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -479,6 +482,7 @@
 				98880EE223D0173600A54315 /* ViewUtils.swift in Sources */,
 				98CCB0C223CD602800CA8C1B /* TransactionItem.swift in Sources */,
 				98CCB0C023CD5CE100CA8C1B /* ShoppingItemCell.swift in Sources */,
+				44317A5A23E671E2003D854A /* ShoppingCategoryCell.swift in Sources */,
 				989F26F423D69BDC00B3EEED /* BudgetCategoriesViewController.swift in Sources */,
 				9890FA3423D69F6600D9DBAE /* BudgetCategoryCell.swift in Sources */,
 				9889219723CB9E09009AB805 /* FinancesPlannerViewController.swift in Sources */,
@@ -486,7 +490,6 @@
 				988921D723CC1B96009AB805 /* DatabaseManager.swift in Sources */,
 				98CCB0C423CD619000CA8C1B /* TransactionItemCell.swift in Sources */,
 				989F26F023D3CB8600B3EEED /* ConversionUtils.swift in Sources */,
-				988921E023CC50CB009AB805 /* TransactionItemViewController.swift in Sources */,
 				986074A823DFD07E0014B153 /* FormViewController.swift in Sources */,
 				98CCB0BE23CD517500CA8C1B /* ErrorUtils.swift in Sources */,
 				9890FA3623D6D35B00D9DBAE /* ShoppingCategory.swift in Sources */,
@@ -499,6 +502,7 @@
 				98EDEFAE23CA80AD00C70424 /* TabViewController.swift in Sources */,
 				986074AB23DFD3E60014B153 /* FormField.swift in Sources */,
 				986074AF23DFEE7A0014B153 /* FormSelectInputCell.swift in Sources */,
+				44317A5823E671A4003D854A /* ShoppingCategoriesViewController.swift in Sources */,
 				98CCB0C623CD64C000CA8C1B /* CalendarManager.swift in Sources */,
 				986074A623DFCEF30014B153 /* FormTextInputCell.swift in Sources */,
 				98EBB78E23E1541B00D97270 /* TransactionFormViewController.swift in Sources */,

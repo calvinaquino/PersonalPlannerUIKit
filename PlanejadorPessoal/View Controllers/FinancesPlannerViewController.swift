@@ -176,13 +176,8 @@ class FinancesPlannerViewController: UIViewController, UITableViewDelegate, UITa
     }
     
     @objc func openTransactionItemForm(forItem item: TransactionItem? = nil) {
-        var transactionItemViewControler: TransactionItemViewController!
-        if let item = item {
-            transactionItemViewControler = TransactionItemViewController(transactionItem: item)
-        } else {
-            transactionItemViewControler = TransactionItemViewController(month: self.calendar.month, year: self.calendar.year)
-        }
-        self.present(transactionItemViewControler.withNavigation(), animated: true, completion: nil)
+        let form = TransactionFormViewController(transaction: item)
+        self.present(form.withNavigation(), animated: true, completion: nil)
     }
     
     // MARK: - UITableViewDeletate, UITableViewDataSource
@@ -207,8 +202,8 @@ class FinancesPlannerViewController: UIViewController, UITableViewDelegate, UITa
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.tableView.deselectRow(at: indexPath, animated: true)
         let transactionItem = self.sections.transaction(at: indexPath)
-        let transactionItemViewControler = TransactionItemViewController(transactionItem: transactionItem)
-        self.present(transactionItemViewControler.withNavigation(), animated: true, completion: nil)
+        let transactionFormViewControler = TransactionFormViewController(transaction: transactionItem)
+        self.present(transactionFormViewControler.withNavigation(), animated: true, completion: nil)
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {

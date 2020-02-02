@@ -47,6 +47,7 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
     func setupNavigationBar() {
         self.title = "Mercado"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(newItemTapped))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "slider.horizontal.3"), style: .plain, target: self, action: #selector(openShoppingCategoriesOptions))
     }
     
     func setupTableView() {
@@ -96,6 +97,11 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
         self.tableView.reloadData()
     }
     
+    @objc func openShoppingCategoriesOptions() {
+        let shoppingCategoriesViewController = ShoppingCategoriesViewController()
+        self.navigationController?.pushViewController(shoppingCategoriesViewController, animated: true)
+    }
+    
     // MARK:-  CRUD Functions
     
     @objc func newItem(name: String, localizedName: String?, price: NSNumber?) {
@@ -118,14 +124,6 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     @objc func openShoppingItemForm(forItem item: ShoppingItem? = nil) {
-//        var transactionItemViewControler: ShoppingItemViewController!
-//        if let item = item {
-//            transactionItemViewControler = ShoppingItemViewController(shoppingItem: item)
-//        } else {
-//            transactionItemViewControler = ShoppingItemViewController()
-//        }
-//        self.present(transactionItemViewControler.withNavigation(), animated: true, completion: nil)
-        
         let form = ItemFormViewController(item: item)
         self.present(form.withNavigation(), animated: true, completion: nil)
     }
@@ -147,17 +145,13 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
         cell.textLabel?.text = shoppingItem.name
         cell.detailTextLabel?.text = shoppingItem.price?.currencyString
         cell.detailTextLabel?.textColor = .gray
-        cell.accessoryView = shoppingItem.isNeeded.boolValue ? UIImageView(image: UIImage(systemName: "cube.box")) : UIImageView(image: UIImage(systemName: "cube.box.fill"))
+        cell.isNeeded = shoppingItem.isNeeded!.boolValue
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.tableView.deselectRow(at: indexPath, animated: true)
         let shoppingItem = self.sections.item(at: indexPath)
-//        shoppingItem.isNeeded = NSNumber(value: !shoppingItem.isNeeded.boolValue)
-//        shoppingItem.saveInBackground().continueOnSuccessWith { (_) -> Any? in
-//            self.fetchData()
-//        }
         self.openShoppingItemForm(forItem: shoppingItem)
     }
     
@@ -172,6 +166,24 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
                 }
             }
         }
+    }
+    
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let shoppingItem = self.sections.item(at: indexPath)
+        let toggleItemTitle = shoppingItem.isNeeded.boolValue ? "Adquirido" : "Faltando"
+        let toggleItem = UIContextualAction(style: .normal, title: toggleItemTitle) { (action, view, success) in
+            shoppingItem.isNeeded = NSNumber(value: !shoppingItem.isNeeded.boolValue)
+            shoppingItem.saveInBackground().continueOnSuccessWith { (_) -> Any? in
+                DispatchQueue.main.async {
+                    self.fetchData()
+                }
+            }
+            success(true)
+        }
+        toggleItem.backgroundColor = .systemBlue
+        let config = UISwipeActionsConfiguration(actions: [toggleItem])
+        config.performsFirstActionWithFullSwipe = true
+        return UISwipeActionsConfiguration(actions: [toggleItem])
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

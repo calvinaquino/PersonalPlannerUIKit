@@ -135,10 +135,14 @@ class FormViewController: UIViewController, UITableViewDelegate, UITableViewData
     func renderTextInputCell(for field: FormField, at indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCell(withIdentifier: FormTextInputCell.Identifier, for: indexPath) as! FormTextInputCell
         
+        var formattedValue = field.value
+        if let valueFormat = field.valueFormat, let value = field.value {
+            formattedValue = valueFormat(value)
+        }
         cell.textLabel?.text = field.name
         cell.textField?.delegate = self
         cell.textField?.placeholder = field.name
-        cell.textField?.text = field.value
+        cell.textField?.text = formattedValue
         cell.textField?.tag = indexPath.row
         return cell
     }
@@ -146,8 +150,12 @@ class FormViewController: UIViewController, UITableViewDelegate, UITableViewData
     func renderSelectionCell(for field: FormField, at indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCell(withIdentifier: FormSelectInputCell.Identifier, for: indexPath) as! FormSelectInputCell
         
+        var formattedValue = field.value
+        if let valueFormat = field.valueFormat, let value = field.value {
+            formattedValue = valueFormat(value)
+        }
         cell.textLabel?.text = field.name
-        cell.detailTextLabel?.text = field.value
+        cell.detailTextLabel?.text = formattedValue
         return cell
     }
     
