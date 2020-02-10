@@ -109,9 +109,9 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
         newShoppingItem.name = name
         newShoppingItem.localizedName = localizedName
         newShoppingItem.price = price
-        newShoppingItem.saveInBackground().continueOnSuccessWith(block: { (_) -> Any? in
-            self.fetchData()
-        })
+//        newShoppingItem.saveInBackground().continueOnSuccessWith(block: { (_) -> Any? in
+//            self.fetchData()
+//        })
     }
     
     @objc func removeItem(at row: Int) {
@@ -158,13 +158,13 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
             let shoppingItem = self.sections.item(at: indexPath)
-            shoppingItem.deleteInBackground { (success: Bool, error: Error?) in
-                if let error = error {
-                    print(error.localizedDescription)
-                } else if success {
-                    self.fetchData()
-                }
-            }
+//            shoppingItem.deleteInBackground { (success: Bool, error: Error?) in
+//                if let error = error {
+//                    print(error.localizedDescription)
+//                } else if success {
+//                    self.fetchData()
+//                }
+//            }
         }
     }
     
@@ -173,11 +173,11 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
         let toggleItemTitle = shoppingItem.isNeeded.boolValue ? "Adquirido" : "Faltando"
         let toggleItem = UIContextualAction(style: .normal, title: toggleItemTitle) { (action, view, success) in
             shoppingItem.isNeeded = NSNumber(value: !shoppingItem.isNeeded.boolValue)
-            shoppingItem.saveInBackground().continueOnSuccessWith { (_) -> Any? in
-                DispatchQueue.main.async {
-                    self.fetchData()
-                }
-            }
+//            shoppingItem.saveInBackground().continueOnSuccessWith { (_) -> Any? in
+//                DispatchQueue.main.async {
+//                    self.fetchData()
+//                }
+//            }
             success(true)
         }
         toggleItem.backgroundColor = .systemBlue

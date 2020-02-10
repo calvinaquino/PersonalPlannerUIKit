@@ -115,7 +115,7 @@ class FinancesPlannerViewController: UIViewController, UITableViewDelegate, UITa
             self.calendar.previousMonth()
             monthLeftOverTransaction.name = "Sobra mes anterior"
             monthLeftOverTransaction.value = self.items.totalTransactions.numberValue
-            monthLeftOverTransaction.saveInBackground()
+//            monthLeftOverTransaction.saveInBackground()
         }
         alert.addAction(yes)
         
@@ -161,9 +161,9 @@ class FinancesPlannerViewController: UIViewController, UITableViewDelegate, UITa
         newTransactionItem.value = price ?? 0
         newTransactionItem.month = month ?? calendar.month.numberValue
         newTransactionItem.year = year ?? calendar.year.numberValue
-        newTransactionItem.saveInBackground().continueOnSuccessWith(block: { (_) -> Any? in
-            self.fetchData()
-        })
+//        newTransactionItem.saveInBackground().continueOnSuccessWith(block: { (_) -> Any? in
+//            self.fetchData()
+//        })
     }
     
     @objc func removeItem(at row: Int) {
@@ -209,26 +209,26 @@ class FinancesPlannerViewController: UIViewController, UITableViewDelegate, UITa
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
             let transactionItem = self.sections.transaction(at: indexPath)
-            transactionItem.deleteInBackground { (success: Bool, error: Error?) in
-                if let error = error {
-                    print(error.localizedDescription)
-                } else if success {
-                    self.fetchData()
-                }
-            }
+//            transactionItem.deleteInBackground { (success: Bool, error: Error?) in
+//                if let error = error {
+//                    print(error.localizedDescription)
+//                } else if success {
+//                    self.fetchData()
+//                }
+//            }
         }
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let section = self.sections[section]
-        let sectionForTotal = self.items.filter { $0.category.objectId == section.category.objectId }.first
-        let category = section.category
-        if category.name == "Geral" {
-            return category.name!
-        }
-        let remaining = category.budget!.doubleValue + sectionForTotal!.total
-        return "\(category.name!)  (\(remaining.currencyString))"
-    }
+//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        let section = self.sections[section]
+//        let sectionForTotal = self.items.filter { $0.category.objectId == section.category.objectId }.first
+//        let category = section.category
+//        if category.name == "Geral" {
+//            return category.name!
+//        }
+//        let remaining = category.budget!.doubleValue + sectionForTotal!.total
+//        return "\(category.name!)  (\(remaining.currencyString))"
+//    }
     
     // MARK: - UISearchResultsUpdating
     

@@ -6,17 +6,11 @@
 //  Copyright © 2020 Calvin Gonçalves de Aquino. All rights reserved.
 //
 
-// Not used until I resolve the nested PFObject issue on subclass
 import Foundation
-import Parse
 
-class BudgetCategory: PFObject, PFSubclassing {
-    static func parseClassName() -> String {
-        "BudgetCategory"
-    }
-    
-    @NSManaged var name: String!
-    @NSManaged var budget: NSNumber?
+class BudgetCategory: NSObject {
+    var name: String!
+    var budget: NSNumber?
 }
 
 struct BudgetSection {

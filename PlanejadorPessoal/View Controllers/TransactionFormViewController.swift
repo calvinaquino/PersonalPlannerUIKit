@@ -32,11 +32,11 @@ class TransactionFormViewController: FormViewController {
     // MARK: - Helper
     
     func getCategoryOptions() -> [FieldOption] {
-        if let categories = DatabaseManager.fetchBudgetCategories() {
-            return categories.map({ (budgetCategory) -> FieldOption in
-                return FieldOption(id: budgetCategory.objectId!, name: budgetCategory.name)
-            })
-        }
+//        if let categories = DatabaseManager.fetchBudgetCategories() {
+//            return categories.map({ (budgetCategory) -> FieldOption in
+//                return FieldOption(id: budgetCategory.objectId!, name: budgetCategory.name)
+//            })
+//        }
         return []
     }
     
@@ -99,13 +99,13 @@ class TransactionFormViewController: FormViewController {
         }
         // Category
         var categoryField = FormField(name: "Categoria", type: .Selection, value: self.transaction?.budgetCategory?.name, options: self.getCategoryOptions)
-        categoryField.didChange = {
-            let newCategory = BudgetCategory(withoutDataWithObjectId: $0)
-            newCategory.fetchIfNeededInBackground(block: { (_, error) in
-                self.fields[2].value = newCategory.name
-                self.tableView.reloadData()
-            })
-        }
+//        categoryField.didChange = {
+//            let newCategory = BudgetCategory(withoutDataWithObjectId: $0)
+//            newCategory.fetchIfNeededInBackground(block: { (_, error) in
+//                self.fields[2].value = newCategory.name
+//                self.tableView.reloadData()
+//            })
+//        }
         // Day
         var dayField = FormField(name: "Dia", type: .Selection, value: self.transaction?.day?.stringValue, options: self.getDays)
         dayField.didChange = {
@@ -144,11 +144,11 @@ class TransactionFormViewController: FormViewController {
             item.value = self.fields[1].value?.numberValue
             DatabaseManager.fetchBudgetCategories { (budgetCategories) in
                 item.budgetCategory = budgetCategories.filter({ $0.name == self.fields[2].value }).first
-                item.saveInBackground(block: { (success, error) in
-                    self.dismiss(animated: true) {
-                        NotificationCenter.default.post(name: TransactionCreatedNotification, object: nil)
-                    }
-                })
+//                item.saveInBackground(block: { (success, error) in
+//                    self.dismiss(animated: true) {
+//                        NotificationCenter.default.post(name: TransactionCreatedNotification, object: nil)
+//                    }
+//                })
             }
         }
     }

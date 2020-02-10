@@ -105,9 +105,9 @@ class BudgetCategoriesViewController: UIViewController, UITableViewDelegate, UIT
     let newBudgetCategory = BudgetCategory()
     newBudgetCategory.name = name
     newBudgetCategory.budget = budget
-    newBudgetCategory.saveInBackground().continueOnSuccessWith(block: { (_) -> Any? in
-      self.fetchData()
-    })
+//    newBudgetCategory.saveInBackground().continueOnSuccessWith(block: { (_) -> Any? in
+//      self.fetchData()
+//    })
   }
   
   @objc func removeItem(at row: Int) {
@@ -140,9 +140,9 @@ class BudgetCategoriesViewController: UIViewController, UITableViewDelegate, UIT
         if isEditing && !nameAlreadyExists, let item = item { // nameAlreadyExists needs to be checked but disregrd original name
           item.name = name
           item.budget = budget.numberValue
-          item.saveInBackground { (_,_) in
-            self.fetchData()
-          }
+//          item.saveInBackground { (_,_) in
+//            self.fetchData()
+//          }
         } else if !nameAlreadyExists {
           self.newItem(name: name, budget: NSNumber(value: Float(budget) ?? 0.0))
         } else {
@@ -200,13 +200,13 @@ class BudgetCategoriesViewController: UIViewController, UITableViewDelegate, UIT
   func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
     if (editingStyle == .delete) {
       let budgetCtegory = self.getItems()[indexPath.row]
-      budgetCtegory.deleteInBackground { (success: Bool, error: Error?) in
-        if let error = error {
-          print(error.localizedDescription)
-        } else if success {
-          self.fetchData()
-        }
-      }
+//      budgetCtegory.deleteInBackground { (success: Bool, error: Error?) in
+//        if let error = error {
+//          print(error.localizedDescription)
+//        } else if success {
+//          self.fetchData()
+//        }
+//      }
     }
   }
   

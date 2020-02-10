@@ -7,14 +7,9 @@
 //
 
 import Foundation
-import Parse
 
-class ShoppingCategory: PFObject, PFSubclassing {
-  static func parseClassName() -> String {
-    "ShoppingCategory"
-  }
-  
-  @NSManaged var name: String!
+class ShoppingCategory: NSObject {
+    var name: String!
 }
 
 struct ShoppingSection {

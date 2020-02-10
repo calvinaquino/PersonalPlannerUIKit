@@ -7,17 +7,12 @@
 //
 
 import Foundation
-import Parse
 
-class ShoppingItem: PFObject, PFSubclassing {
-  static func parseClassName() -> String {
-    "ShoppingItem"
-  }
-  
-  @NSManaged var name: String!
-  @NSManaged var localizedName: String?
-  @NSManaged var price: NSNumber?
-  @NSManaged var isNeeded: NSNumber!
-  @NSManaged var shoppingCategory: ShoppingCategory?
+class ShoppingItem: NSObject {
+  var name: String!
+  var localizedName: String?
+  var price: NSNumber?
+  var isNeeded: NSNumber!
+  var shoppingCategory: ShoppingCategory?
 }
 

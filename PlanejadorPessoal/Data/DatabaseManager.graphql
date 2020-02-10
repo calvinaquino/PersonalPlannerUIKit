@@ -1,0 +1,15 @@
+
+query ShoppingList {
+  shoppingItems {
+    results {
+      id
+      name
+      localizedName
+      price
+      shoppingCategory {
+        id
+        name
+      }
+    }
+  }
+}

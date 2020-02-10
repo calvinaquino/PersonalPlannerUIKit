@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:/Users/calvinaquino/Projects/PlanejadorPessoal/PlanejadorPessoal.xcodeproj">
+      location = "self:">
    </FileRef>
 </Workspace>

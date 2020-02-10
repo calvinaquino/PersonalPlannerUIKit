@@ -3,12 +3,17 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4419EFB123F12B4100BEB16E /* schema.json in Resources */ = {isa = PBXBuildFile; fileRef = 4419EFB023F12B4100BEB16E /* schema.json */; };
 		44317A5823E671A4003D854A /* ShoppingCategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44317A5723E671A4003D854A /* ShoppingCategoriesViewController.swift */; };
 		44317A5A23E671E2003D854A /* ShoppingCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44317A5923E671E2003D854A /* ShoppingCategoryCell.swift */; };
+		448DB22D23F1462500F01B13 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 448DB22C23F1462500F01B13 /* API.swift */; };
+		44918B8123F133DB001496D5 /* DatabaseManager.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 44918B8023F133DB001496D5 /* DatabaseManager.graphql */; };
+		44918B8323F13611001496D5 /* schema.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 44918B8223F13611001496D5 /* schema.graphql */; };
+		44918B8623F138E7001496D5 /* Apollo in Frameworks */ = {isa = PBXBuildFile; productRef = 44918B8523F138E7001496D5 /* Apollo */; };
 		982DEAD623E00D75006FC3AC /* FormSelectionPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982DEAD523E00D75006FC3AC /* FormSelectionPickerViewController.swift */; };
 		986074A623DFCEF30014B153 /* FormTextInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986074A523DFCEF30014B153 /* FormTextInputCell.swift */; };
 		986074A823DFD07E0014B153 /* FormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986074A723DFD07E0014B153 /* FormViewController.swift */; };
@@ -59,8 +64,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4419EFB023F12B4100BEB16E /* schema.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = schema.json; sourceTree = "<group>"; };
 		44317A5723E671A4003D854A /* ShoppingCategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingCategoriesViewController.swift; sourceTree = "<group>"; };
 		44317A5923E671E2003D854A /* ShoppingCategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingCategoryCell.swift; sourceTree = "<group>"; };
+		448DB22C23F1462500F01B13 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		44918B8023F133DB001496D5 /* DatabaseManager.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = DatabaseManager.graphql; sourceTree = "<group>"; };
+		44918B8223F13611001496D5 /* schema.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = schema.graphql; sourceTree = "<group>"; };
 		982DEAD523E00D75006FC3AC /* FormSelectionPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormSelectionPickerViewController.swift; sourceTree = "<group>"; };
 		986074A523DFCEF30014B153 /* FormTextInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormTextInputCell.swift; sourceTree = "<group>"; };
 		986074A723DFD07E0014B153 /* FormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormViewController.swift; sourceTree = "<group>"; };
@@ -105,6 +114,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44918B8623F138E7001496D5 /* Apollo in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -150,18 +160,10 @@
 			children = (
 				98CCB0C523CD64C000CA8C1B /* CalendarManager.swift */,
 				988921D623CC1B96009AB805 /* DatabaseManager.swift */,
+				44918B8023F133DB001496D5 /* DatabaseManager.graphql */,
 				988921DC23CC1C4D009AB805 /* Models */,
 			);
 			path = Data;
-			sourceTree = "<group>";
-		};
-		988921D923CC1BC2009AB805 /* Root Delegates */ = {
-			isa = PBXGroup;
-			children = (
-				98EDEFA923CA80AD00C70424 /* AppDelegate.swift */,
-				98EDEFAB23CA80AD00C70424 /* SceneDelegate.swift */,
-			);
-			path = "Root Delegates";
 			sourceTree = "<group>";
 		};
 		988921DA23CC1BD5009AB805 /* View Controllers */ = {
@@ -245,8 +247,12 @@
 		98EDEFA823CA80AD00C70424 /* PlanejadorPessoal */ = {
 			isa = PBXGroup;
 			children = (
+				448DB22C23F1462500F01B13 /* API.swift */,
+				4419EFB023F12B4100BEB16E /* schema.json */,
+				44918B8223F13611001496D5 /* schema.graphql */,
 				9861C9A923CB97970070F05F /* PlanejadorPessoal.entitlements */,
-				988921D923CC1BC2009AB805 /* Root Delegates */,
+				98EDEFA923CA80AD00C70424 /* AppDelegate.swift */,
+				98EDEFAB23CA80AD00C70424 /* SceneDelegate.swift */,
 				988921DA23CC1BD5009AB805 /* View Controllers */,
 				98CCB0BB23CD511E00CA8C1B /* Views */,
 				988921D823CC1BB5009AB805 /* Data */,
@@ -281,16 +287,19 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 98EDEFD023CA80B000C70424 /* Build configuration list for PBXNativeTarget "PlanejadorPessoal" */;
 			buildPhases = (
+				44918B7C23F12CA6001496D5 /* Generate Apollo GraphQL API */,
 				98EDEFA223CA80AD00C70424 /* Sources */,
 				98EDEFA323CA80AD00C70424 /* Frameworks */,
 				98EDEFA423CA80AD00C70424 /* Resources */,
-				9889218123CB98FC009AB805 /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = PlanejadorPessoal;
+			packageProductDependencies = (
+				44918B8523F138E7001496D5 /* Apollo */,
+			);
 			productName = "Planejador Pessoal";
 			productReference = 98EDEFA623CA80AD00C70424 /* PlanejadorPessoal.app */;
 			productType = "com.apple.product-type.application";
@@ -363,6 +372,9 @@
 				Base,
 			);
 			mainGroup = 98EDEF9D23CA80AD00C70424;
+			packageReferences = (
+				44918B8423F138E7001496D5 /* XCRemoteSwiftPackageReference "apollo-ios" */,
+			);
 			productRefGroup = 98EDEFA723CA80AD00C70424 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -379,7 +391,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44918B8123F133DB001496D5 /* DatabaseManager.graphql in Resources */,
+				4419EFB123F12B4100BEB16E /* schema.json in Resources */,
 				98EDEFB623CA80AF00C70424 /* LaunchScreen.storyboard in Resources */,
+				44918B8323F13611001496D5 /* schema.graphql in Resources */,
 				98EDEFB023CA80AF00C70424 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -401,7 +416,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		9889218123CB98FC009AB805 /* ShellScript */ = {
+		44918B7C23F12CA6001496D5 /* Generate Apollo GraphQL API */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -409,32 +424,17 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/Bolts.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/ParseUI.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Parse.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/ParseFacebookUtilsV4.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/ParseTwitterUtils.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/FBSDKCoreKit.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/FBSDKLoginKit.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/FBSDKPlacesKit.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/FBSDKShareKit.framework",
+				"",
+				"$(SRCROOT)/schema.json",
 			);
+			name = "Generate Apollo GraphQL API";
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(SRCROOT)/Frameworks/Bolts.framework",
-				"$(SRCROOT)/Frameworks/ParseUI.framework",
-				"$(SRCROOT)/Frameworks/Parse.framework",
-				"$(SRCROOT)/Frameworks/ParseFacebookUtilsV4.framework",
-				"$(SRCROOT)/Frameworks/ParseTwitterUtils.framework",
-				"$(SRCROOT)/Frameworks/FBSDKCoreKit.framework",
-				"$(SRCROOT)/Frameworks/FBSDKLoginKit.framework",
-				"$(SRCROOT)/Frameworks/FBSDKPlacesKit.framework",
-				"$(SRCROOT)/Frameworks/FBSDKShareKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n/usr/local/bin/carthage copy-frameworks\n";
+			shellScript = "# Go to the build root and search up the chain to find the Derived Data Path where the source packages are checked out.\nDERIVED_DATA_CANDIDATE=\"${BUILD_ROOT}\"\n\nwhile ! [ -d \"${DERIVED_DATA_CANDIDATE}/SourcePackages\" ]; do\n  if [ \"${DERIVED_DATA_CANDIDATE}\" = / ]; then\n    echo >&2 \"error: Unable to locate SourcePackages directory from BUILD_ROOT: '${BUILD_ROOT}'\"\n    exit 1\n  fi\n\n  DERIVED_DATA_CANDIDATE=\"$(dirname \"${DERIVED_DATA_CANDIDATE}\")\"\ndone\n\n# Grab a reference to the directory where scripts are checked out\nSCRIPT_PATH=\"${DERIVED_DATA_CANDIDATE}/SourcePackages/checkouts/apollo-ios/scripts\"\n#SCRIPT_PATH=\"${DERIVED_DATA_CANDIDATE}/SourcePackages/checkouts/scripts\"\n\nif [ -z \"${SCRIPT_PATH}\" ]; then\n    echo >&2 \"error: Couldn't find the CLI script in your checked out SPM packages; make sure to add the framework to your project.\"\n    exit 1\nfi\n\ncd \"${SRCROOT}/${TARGET_NAME}\"\n\"${SCRIPT_PATH}\"/run-bundled-codegen.sh codegen:generate --target=swift --includes=./**/*.graphql --localSchemaFile=\"schema.json\" API.swift\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -457,6 +457,7 @@
 				986074A823DFD07E0014B153 /* FormViewController.swift in Sources */,
 				98CCB0BE23CD517500CA8C1B /* ErrorUtils.swift in Sources */,
 				9890FA3623D6D35B00D9DBAE /* ShoppingCategory.swift in Sources */,
+				448DB22D23F1462500F01B13 /* API.swift in Sources */,
 				98EDEFAA23CA80AD00C70424 /* AppDelegate.swift in Sources */,
 				988921DE23CC1C6D009AB805 /* ShoppingItem.swift in Sources */,
 				986074B123DFF05B0014B153 /* FormCellProtocol.swift in Sources */,
@@ -646,6 +647,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 					"$(PROJECT_DIR)/Frameworks",
+					"$(PROJECT_DIR)/Carthage/Build/iOS/Static",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/PlanejadorPessoal/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -675,6 +678,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 					"$(PROJECT_DIR)/Frameworks",
+					"$(PROJECT_DIR)/Carthage/Build/iOS/Static",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/PlanejadorPessoal/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -813,6 +818,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		44918B8423F138E7001496D5 /* XCRemoteSwiftPackageReference "apollo-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@github.com:apollographql/apollo-ios.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		44918B8523F138E7001496D5 /* Apollo */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 44918B8423F138E7001496D5 /* XCRemoteSwiftPackageReference "apollo-ios" */;
+			productName = Apollo;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 98EDEF9E23CA80AD00C70424 /* Project object */;
 }

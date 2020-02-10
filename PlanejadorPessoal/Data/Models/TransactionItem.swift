@@ -7,18 +7,13 @@
 //
 
 import Foundation
-import Parse
 
-class TransactionItem: PFObject, PFSubclassing {
-    static func parseClassName() -> String {
-        "TransactionItem"
-    }
-    
-    @NSManaged var name: String!
-    @NSManaged var location: String!
-    @NSManaged var value: NSNumber!
-    @NSManaged var day: NSNumber!
-    @NSManaged var month: NSNumber!
-    @NSManaged var year: NSNumber!
-    @NSManaged var budgetCategory: BudgetCategory!
+class TransactionItem: NSObject {
+    var name: String!
+    var location: String!
+    var value: NSNumber!
+    var day: NSNumber!
+    var month: NSNumber!
+    var year: NSNumber!
+    var budgetCategory: BudgetCategory!
 }
