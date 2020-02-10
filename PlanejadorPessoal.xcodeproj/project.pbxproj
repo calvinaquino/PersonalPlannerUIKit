@@ -18,15 +18,6 @@
 		986074B123DFF05B0014B153 /* FormCellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986074B023DFF05B0014B153 /* FormCellProtocol.swift */; };
 		98880EE223D0173600A54315 /* ViewUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98880EE123D0173600A54315 /* ViewUtils.swift */; };
 		98880EE423D024A500A54315 /* BudgetCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98880EE323D024A500A54315 /* BudgetCategory.swift */; };
-		9889218723CB9B41009AB805 /* ParseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9889218223CB9B41009AB805 /* ParseUI.framework */; };
-		9889218823CB9B41009AB805 /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9889218323CB9B41009AB805 /* ParseFacebookUtilsV4.framework */; };
-		9889218923CB9B41009AB805 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9889218423CB9B41009AB805 /* Parse.framework */; };
-		9889218A23CB9B41009AB805 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9889218523CB9B41009AB805 /* Bolts.framework */; };
-		9889218B23CB9B41009AB805 /* ParseTwitterUtils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9889218623CB9B41009AB805 /* ParseTwitterUtils.framework */; };
-		9889219023CB9CE2009AB805 /* FBSDKPlacesKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9889218C23CB9CE2009AB805 /* FBSDKPlacesKit.framework */; };
-		9889219123CB9CE2009AB805 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9889218D23CB9CE2009AB805 /* FBSDKLoginKit.framework */; };
-		9889219223CB9CE2009AB805 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9889218E23CB9CE2009AB805 /* FBSDKShareKit.framework */; };
-		9889219323CB9CE2009AB805 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9889218F23CB9CE2009AB805 /* FBSDKCoreKit.framework */; };
 		9889219523CB9DF8009AB805 /* ShoppingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9889219423CB9DF8009AB805 /* ShoppingListViewController.swift */; };
 		9889219723CB9E09009AB805 /* FinancesPlannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9889219623CB9E09009AB805 /* FinancesPlannerViewController.swift */; };
 		988921D723CC1B96009AB805 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988921D623CC1B96009AB805 /* DatabaseManager.swift */; };
@@ -80,15 +71,6 @@
 		9861C9A923CB97970070F05F /* PlanejadorPessoal.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PlanejadorPessoal.entitlements; sourceTree = "<group>"; };
 		98880EE123D0173600A54315 /* ViewUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewUtils.swift; sourceTree = "<group>"; };
 		98880EE323D024A500A54315 /* BudgetCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetCategory.swift; sourceTree = "<group>"; };
-		9889218223CB9B41009AB805 /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseUI.framework; sourceTree = "<group>"; };
-		9889218323CB9B41009AB805 /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
-		9889218423CB9B41009AB805 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
-		9889218523CB9B41009AB805 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
-		9889218623CB9B41009AB805 /* ParseTwitterUtils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseTwitterUtils.framework; sourceTree = "<group>"; };
-		9889218C23CB9CE2009AB805 /* FBSDKPlacesKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKPlacesKit.framework; sourceTree = "<group>"; };
-		9889218D23CB9CE2009AB805 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
-		9889218E23CB9CE2009AB805 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
-		9889218F23CB9CE2009AB805 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		9889219423CB9DF8009AB805 /* ShoppingListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListViewController.swift; sourceTree = "<group>"; };
 		9889219623CB9E09009AB805 /* FinancesPlannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinancesPlannerViewController.swift; sourceTree = "<group>"; };
 		988921D623CC1B96009AB805 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
@@ -123,15 +105,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9889219223CB9CE2009AB805 /* FBSDKShareKit.framework in Frameworks */,
-				9889219023CB9CE2009AB805 /* FBSDKPlacesKit.framework in Frameworks */,
-				9889218823CB9B41009AB805 /* ParseFacebookUtilsV4.framework in Frameworks */,
-				9889218923CB9B41009AB805 /* Parse.framework in Frameworks */,
-				9889218723CB9B41009AB805 /* ParseUI.framework in Frameworks */,
-				9889219123CB9CE2009AB805 /* FBSDKLoginKit.framework in Frameworks */,
-				9889218A23CB9B41009AB805 /* Bolts.framework in Frameworks */,
-				9889219323CB9CE2009AB805 /* FBSDKCoreKit.framework in Frameworks */,
-				9889218B23CB9B41009AB805 /* ParseTwitterUtils.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -168,15 +141,6 @@
 		9861C9A823CAAA2B0070F05F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				9889218F23CB9CE2009AB805 /* FBSDKCoreKit.framework */,
-				9889218D23CB9CE2009AB805 /* FBSDKLoginKit.framework */,
-				9889218C23CB9CE2009AB805 /* FBSDKPlacesKit.framework */,
-				9889218E23CB9CE2009AB805 /* FBSDKShareKit.framework */,
-				9889218523CB9B41009AB805 /* Bolts.framework */,
-				9889218423CB9B41009AB805 /* Parse.framework */,
-				9889218323CB9B41009AB805 /* ParseFacebookUtilsV4.framework */,
-				9889218623CB9B41009AB805 /* ParseTwitterUtils.framework */,
-				9889218223CB9B41009AB805 /* ParseUI.framework */,
 			);
 			path = Frameworks;
 			sourceTree = "<group>";
