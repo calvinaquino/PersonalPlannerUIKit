@@ -8,21 +8,19 @@
 
 // Not used until I resolve the nested PFObject issue on subclass
 import Foundation
-import Parse
 
-class BudgetCategory: PFObject, PFSubclassing {
-    static func parseClassName() -> String {
-        "BudgetCategory"
+class TransactionCategory: Record {
+    override class var recordType: String {
+        "TransactionCategory"
     }
     
-    @NSManaged var name: String!
-    @NSManaged var budget: NSNumber?
+    var name: String!
+    var budget: NSNumber?
 }
 
 struct BudgetSection {
-    var category: BudgetCategory
+    var category: TransactionCategory
     var transactions: [TransactionItem]
-//    var hidden: Bool = false
     
     var total: Double {
         self.transactions.reduce(0) { $1.value.doubleValue + $0 }

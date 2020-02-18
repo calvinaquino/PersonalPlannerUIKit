@@ -7,9 +7,6 @@
 //
 
 import UIKit
-import Parse
-
-import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,18 +14,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
   
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-    
-    ShoppingItem.registerSubclass()
-    TransactionItem.registerSubclass()
-    BudgetCategory.registerSubclass()
-    
-    let configuration = ParseClientConfiguration {
-      $0.applicationId = "0z5F3IL3II8MdllpO09MtGqnXoUA9Jqlq5jtftxN"
-      $0.clientKey = "nT7eXhKNJcBTMb8DlsdOwJAlhndYkYtI432iyxce"
-      $0.server = "https://parseapi.back4app.com"
-      $0.isLocalDatastoreEnabled = true
-    }
-    Parse.initialize(with: configuration)
     
     window = UIWindow(frame: UIScreen.main.bounds)
     window?.rootViewController = TabViewController()

@@ -102,11 +102,11 @@ class ShoppingCategoriesViewController: UIViewController, UITableViewDelegate, U
   // MARK:-  CRUD Functions
   
   @objc func newItem(name: String) {
-    let newShoppingCategory = ShoppingCategory()
+    let newShoppingCategory = ShoppingCategory(with: nil)
     newShoppingCategory.name = name
-    newShoppingCategory.saveInBackground().continueOnSuccessWith(block: { (_) -> Any? in
-      self.fetchData()
-    })
+//    newShoppingCategory.saveInBackground().continueOnSuccessWith(block: { (_) -> Any? in
+//      self.fetchData()
+//    })
   }
   
   @objc func removeItem(at row: Int) {
@@ -137,9 +137,9 @@ class ShoppingCategoriesViewController: UIViewController, UITableViewDelegate, U
         let nameAlreadyExists = self.nameAlreadyExists(name: name, whitelist: isEditing ? [item!.name] : nil)
         if isEditing && !nameAlreadyExists, let item = item { // nameAlreadyExists needs to be checked but disregrd original name
           item.name = name
-          item.saveInBackground { (_,_) in
-            self.fetchData()
-          }
+//          item.saveInBackground { (_,_) in
+//            self.fetchData()
+//          }
         } else if !nameAlreadyExists {
           self.newItem(name: name)
         } else {
@@ -190,13 +190,13 @@ class ShoppingCategoriesViewController: UIViewController, UITableViewDelegate, U
   func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
     if (editingStyle == .delete) {
       let budgetCtegory = self.getItems()[indexPath.row]
-      budgetCtegory.deleteInBackground { (success: Bool, error: Error?) in
-        if let error = error {
-          print(error.localizedDescription)
-        } else if success {
-          self.fetchData()
-        }
-      }
+//      budgetCtegory.deleteInBackground { (success: Bool, error: Error?) in
+//        if let error = error {
+//          print(error.localizedDescription)
+//        } else if success {
+//          self.fetchData()
+//        }
+//      }
     }
   }
   

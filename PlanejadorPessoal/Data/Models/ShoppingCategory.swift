@@ -7,24 +7,36 @@
 //
 
 import Foundation
-import Parse
+import CloudKit
 
-class ShoppingCategory: PFObject, PFSubclassing {
-  static func parseClassName() -> String {
-    "ShoppingCategory"
-  }
-  
-  @NSManaged var name: String!
+class ShoppingCategory: Record {
+    override class var recordType: String {
+        "ShoppingCategory"
+    }
+    
+    var name: String! {
+        get { self.ckRecord["name"] }
+        set { self.ckRecord["name"] = newValue }
+    }
+    
+    override var debugDescription: String {
+        "Category - name: \(name ?? "")"
+    }
 }
 
 struct ShoppingSection {
-    var category: ShoppingCategory
+    var category: ShoppingCategory?
     var items: [ShoppingItem]
-//    var hidden: Bool = false
-    
-    var total: Double {
-        self.items.reduce(0) { ($1.isNeeded.boolValue ? 1 : 0) + $0 }
+    var categoryName: String {
+        if let category = self.category {
+            return category.name
+        }
+        return "Geral"
     }
+    
+    //    var total: Double {
+    //        self.items.reduce(0) { ($1.isNeeded.boolValue ? 1 : 0) + $0 }
+    //    }
 }
 
 extension Array where Iterator.Element == ShoppingSection {

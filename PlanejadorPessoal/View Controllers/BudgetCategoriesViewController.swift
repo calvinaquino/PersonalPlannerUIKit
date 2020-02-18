@@ -10,8 +10,8 @@ import UIKit
 
 class BudgetCategoriesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchResultsUpdating, UITextFieldDelegate {
   
-  var items: [BudgetCategory] = []
-  var filteredItems: [BudgetCategory] = []
+  var items: [TransactionCategory] = []
+  var filteredItems: [TransactionCategory] = []
   var tableView: UITableView!
   var refreshControl: UIRefreshControl!
   var searchController: UISearchController!
@@ -86,7 +86,7 @@ class BudgetCategoriesViewController: UIViewController, UITableViewDelegate, UIT
     return self.items.filter{ $0.name == name }.first != nil
   }
   
-  func getItems() -> [BudgetCategory] {
+  func getItems() -> [TransactionCategory] {
     return self.searchController.isActive ? self.filteredItems : self.items
   }
   
@@ -102,12 +102,12 @@ class BudgetCategoriesViewController: UIViewController, UITableViewDelegate, UIT
   // MARK:-  CRUD Functions
   
   @objc func newItem(name: String, budget: NSNumber?) {
-    let newBudgetCategory = BudgetCategory()
+    let newBudgetCategory = TransactionCategory(with: nil)
     newBudgetCategory.name = name
     newBudgetCategory.budget = budget
-    newBudgetCategory.saveInBackground().continueOnSuccessWith(block: { (_) -> Any? in
-      self.fetchData()
-    })
+//    newBudgetCategory.saveInBackground().continueOnSuccessWith(block: { (_) -> Any? in
+//      self.fetchData()
+//    })
   }
   
   @objc func removeItem(at row: Int) {
@@ -119,7 +119,7 @@ class BudgetCategoriesViewController: UIViewController, UITableViewDelegate, UIT
     self.showNewItemDialog()
   }
   
-  @objc func showEditItemDialog(item: BudgetCategory) {
+  @objc func showEditItemDialog(item: TransactionCategory) {
     self.showItemDialog(itemName: nil, item: item)
   }
   
@@ -127,7 +127,7 @@ class BudgetCategoriesViewController: UIViewController, UITableViewDelegate, UIT
     self.showItemDialog(itemName: itemName, item: nil)
   }
   
-  func showItemDialog(itemName: String? = nil, item: BudgetCategory? = nil) {
+  func showItemDialog(itemName: String? = nil, item: TransactionCategory? = nil) {
     let isEditing = item != nil
     let title = isEditing ? "Editar item" : "Novo item"
     let alert = UIAlertController(title: title, message: "Insira os dados do item:", preferredStyle: UIAlertController.Style.alert )
@@ -140,9 +140,9 @@ class BudgetCategoriesViewController: UIViewController, UITableViewDelegate, UIT
         if isEditing && !nameAlreadyExists, let item = item { // nameAlreadyExists needs to be checked but disregrd original name
           item.name = name
           item.budget = budget.numberValue
-          item.saveInBackground { (_,_) in
-            self.fetchData()
-          }
+//          item.saveInBackground { (_,_) in
+//            self.fetchData()
+//          }
         } else if !nameAlreadyExists {
           self.newItem(name: name, budget: NSNumber(value: Float(budget) ?? 0.0))
         } else {
@@ -200,13 +200,13 @@ class BudgetCategoriesViewController: UIViewController, UITableViewDelegate, UIT
   func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
     if (editingStyle == .delete) {
       let budgetCtegory = self.getItems()[indexPath.row]
-      budgetCtegory.deleteInBackground { (success: Bool, error: Error?) in
-        if let error = error {
-          print(error.localizedDescription)
-        } else if success {
-          self.fetchData()
-        }
-      }
+//      budgetCtegory.deleteInBackground { (success: Bool, error: Error?) in
+//        if let error = error {
+//          print(error.localizedDescription)
+//        } else if success {
+//          self.fetchData()
+//        }
+//      }
     }
   }
   

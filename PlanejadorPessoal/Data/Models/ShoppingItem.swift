@@ -7,17 +7,50 @@
 //
 
 import Foundation
-import Parse
+import CloudKit
 
-class ShoppingItem: PFObject, PFSubclassing {
-  static func parseClassName() -> String {
-    "ShoppingItem"
-  }
-  
-  @NSManaged var name: String!
-  @NSManaged var localizedName: String?
-  @NSManaged var price: NSNumber?
-  @NSManaged var isNeeded: NSNumber!
-  @NSManaged var shoppingCategory: ShoppingCategory?
+class ShoppingItem: Record {
+    override class var recordType: String {
+        "ShoppingItem"
+    }
+
+    var name: String! {
+        get { self.ckRecord["name"] }
+        set { self.ckRecord["name"] = newValue }
+    }
+    var localizedName: String? {
+        get { self.ckRecord["localizedName"] }
+        set { self.ckRecord["localizedName"] = newValue }
+    }
+    var price: Double? {
+        get { self.ckRecord["price"] }
+        set { self.ckRecord["price"] = newValue! }
+    }
+    var isNeeded: Bool! {
+        get { self.ckRecord["isNeeded"] }
+        set { self.ckRecord["isNeeded"] = newValue}
+    }
+    // not like this
+    var shoppingCategory: ShoppingCategory? {
+        get {
+            if let reference = self.ckRecord["shoppingCategory"] as? CKRecord.Reference {
+                let record = CKRecord(recordType: ShoppingCategory.recordType, recordID: reference.recordID)
+                return ShoppingCategory(with: record)
+            }
+            return nil
+        }
+        set {
+            if let newShoppingCategory = newValue {
+                let reference = CKRecord.Reference(recordID: newShoppingCategory.ckRecord!.recordID, action: .none)
+                self.ckRecord["shoppingCategory"] = reference
+            } else {
+                self.ckRecord["shoppingCategory"] = nil
+            }
+        }
+    }
+    
+    override var debugDescription: String {
+        "Item - name: \(name ?? ""), price: \(price ?? 0.0)"
+    }
 }
 

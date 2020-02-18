@@ -108,14 +108,14 @@ class FinancesPlannerViewController: UIViewController, UITableViewDelegate, UITa
         let alert = UIAlertController(title: "Mensagem", message: "Gostaria de enviar esse valor como sobra para o próximo mês?", preferredStyle: UIAlertController.Style.alert )
         
         let yes = UIAlertAction(title: "Sim", style: .default) { (alertAction) in
-            let monthLeftOverTransaction = TransactionItem()
+            let monthLeftOverTransaction = TransactionItem(with: nil)
             self.calendar.nextMonth()
             monthLeftOverTransaction.month = self.calendar.month!.numberValue
             monthLeftOverTransaction.year = self.calendar.year!.numberValue
             self.calendar.previousMonth()
             monthLeftOverTransaction.name = "Sobra mes anterior"
             monthLeftOverTransaction.value = self.items.totalTransactions.numberValue
-            monthLeftOverTransaction.saveInBackground()
+//            monthLeftOverTransaction.saveInBackground()
         }
         alert.addAction(yes)
         
@@ -156,14 +156,14 @@ class FinancesPlannerViewController: UIViewController, UITableViewDelegate, UITa
     // MARK:-  CRUD Functions
     
     @objc func newItem(name: String, price: NSNumber?, month: NSNumber?, year: NSNumber?) {
-        let newTransactionItem = TransactionItem()
+        let newTransactionItem = TransactionItem(with: nil)
         newTransactionItem.name = name
         newTransactionItem.value = price ?? 0
         newTransactionItem.month = month ?? calendar.month.numberValue
         newTransactionItem.year = year ?? calendar.year.numberValue
-        newTransactionItem.saveInBackground().continueOnSuccessWith(block: { (_) -> Any? in
-            self.fetchData()
-        })
+//        newTransactionItem.saveInBackground().continueOnSuccessWith(block: { (_) -> Any? in
+//            self.fetchData()
+//        })
     }
     
     @objc func removeItem(at row: Int) {
@@ -209,25 +209,26 @@ class FinancesPlannerViewController: UIViewController, UITableViewDelegate, UITa
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
             let transactionItem = self.sections.transaction(at: indexPath)
-            transactionItem.deleteInBackground { (success: Bool, error: Error?) in
-                if let error = error {
-                    print(error.localizedDescription)
-                } else if success {
-                    self.fetchData()
-                }
-            }
+//            transactionItem.deleteInBackground { (success: Bool, error: Error?) in
+//                if let error = error {
+//                    print(error.localizedDescription)
+//                } else if success {
+//                    self.fetchData()
+//                }
+//            }
         }
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "FIXME"
         let section = self.sections[section]
-        let sectionForTotal = self.items.filter { $0.category.objectId == section.category.objectId }.first
-        let category = section.category
-        if category.name == "Geral" {
-            return category.name!
-        }
-        let remaining = category.budget!.doubleValue + sectionForTotal!.total
-        return "\(category.name!)  (\(remaining.currencyString))"
+//        let sectionForTotal = self.items.filter { $0.category.objectId == section.category.objectId }.first
+//        let category = section.category
+//        if category.name == "Geral" {
+//            return category.name!
+//        }
+//        let remaining = category.budget!.doubleValue + sectionForTotal!.total
+//        return "\(category.name!)  (\(remaining.currencyString))"
     }
     
     // MARK: - UISearchResultsUpdating

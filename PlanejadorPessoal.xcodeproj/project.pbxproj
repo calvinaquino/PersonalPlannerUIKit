@@ -3,12 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		44317A5823E671A4003D854A /* ShoppingCategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44317A5723E671A4003D854A /* ShoppingCategoriesViewController.swift */; };
 		44317A5A23E671E2003D854A /* ShoppingCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44317A5923E671E2003D854A /* ShoppingCategoryCell.swift */; };
+		4469D28323F9CA4F004BFD29 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4469D28223F9CA4F004BFD29 /* CloudKit.framework */; };
+		4469D28523FB26B1004BFD29 /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4469D28423FB26B1004BFD29 /* Record.swift */; };
 		982DEAD623E00D75006FC3AC /* FormSelectionPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982DEAD523E00D75006FC3AC /* FormSelectionPickerViewController.swift */; };
 		986074A623DFCEF30014B153 /* FormTextInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986074A523DFCEF30014B153 /* FormTextInputCell.swift */; };
 		986074A823DFD07E0014B153 /* FormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986074A723DFD07E0014B153 /* FormViewController.swift */; };
@@ -61,6 +63,8 @@
 /* Begin PBXFileReference section */
 		44317A5723E671A4003D854A /* ShoppingCategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingCategoriesViewController.swift; sourceTree = "<group>"; };
 		44317A5923E671E2003D854A /* ShoppingCategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingCategoryCell.swift; sourceTree = "<group>"; };
+		4469D28223F9CA4F004BFD29 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		4469D28423FB26B1004BFD29 /* Record.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
 		982DEAD523E00D75006FC3AC /* FormSelectionPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormSelectionPickerViewController.swift; sourceTree = "<group>"; };
 		986074A523DFCEF30014B153 /* FormTextInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormTextInputCell.swift; sourceTree = "<group>"; };
 		986074A723DFD07E0014B153 /* FormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormViewController.swift; sourceTree = "<group>"; };
@@ -105,6 +109,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4469D28323F9CA4F004BFD29 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,6 +130,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4469D28123F9CA4F004BFD29 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4469D28223F9CA4F004BFD29 /* CloudKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		986074A923DFD3CD0014B153 /* Form */ = {
 			isa = PBXGroup;
 			children = (
@@ -136,13 +149,6 @@
 				982DEAD523E00D75006FC3AC /* FormSelectionPickerViewController.swift */,
 			);
 			path = Form;
-			sourceTree = "<group>";
-		};
-		9861C9A823CAAA2B0070F05F /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Frameworks;
 			sourceTree = "<group>";
 		};
 		988921D823CC1BB5009AB805 /* Data */ = {
@@ -196,6 +202,7 @@
 				98CCB0C123CD602800CA8C1B /* TransactionItem.swift */,
 				98880EE323D024A500A54315 /* BudgetCategory.swift */,
 				9890FA3523D6D35B00D9DBAE /* ShoppingCategory.swift */,
+				4469D28423FB26B1004BFD29 /* Record.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -228,7 +235,7 @@
 				98EDEFBF23CA80B000C70424 /* PlanejadorPessoalTests */,
 				98EDEFCA23CA80B000C70424 /* PlanejadorPessoalUITests */,
 				98EDEFA723CA80AD00C70424 /* Products */,
-				9861C9A823CAAA2B0070F05F /* Frameworks */,
+				4469D28123F9CA4F004BFD29 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -284,7 +291,6 @@
 				98EDEFA223CA80AD00C70424 /* Sources */,
 				98EDEFA323CA80AD00C70424 /* Frameworks */,
 				98EDEFA423CA80AD00C70424 /* Resources */,
-				9889218123CB98FC009AB805 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -355,7 +361,7 @@
 				};
 			};
 			buildConfigurationList = 98EDEFA123CA80AD00C70424 /* Build configuration list for PBXProject "PlanejadorPessoal" */;
-			compatibilityVersion = "Xcode 9.3";
+			compatibilityVersion = "Xcode 11.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -400,44 +406,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		9889218123CB98FC009AB805 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/Bolts.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/ParseUI.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Parse.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/ParseFacebookUtilsV4.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/ParseTwitterUtils.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/FBSDKCoreKit.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/FBSDKLoginKit.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/FBSDKPlacesKit.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/FBSDKShareKit.framework",
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(SRCROOT)/Frameworks/Bolts.framework",
-				"$(SRCROOT)/Frameworks/ParseUI.framework",
-				"$(SRCROOT)/Frameworks/Parse.framework",
-				"$(SRCROOT)/Frameworks/ParseFacebookUtilsV4.framework",
-				"$(SRCROOT)/Frameworks/ParseTwitterUtils.framework",
-				"$(SRCROOT)/Frameworks/FBSDKCoreKit.framework",
-				"$(SRCROOT)/Frameworks/FBSDKLoginKit.framework",
-				"$(SRCROOT)/Frameworks/FBSDKPlacesKit.framework",
-				"$(SRCROOT)/Frameworks/FBSDKShareKit.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n/usr/local/bin/carthage copy-frameworks\n";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		98EDEFA223CA80AD00C70424 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -447,6 +415,7 @@
 				98CCB0C223CD602800CA8C1B /* TransactionItem.swift in Sources */,
 				98CCB0C023CD5CE100CA8C1B /* ShoppingItemCell.swift in Sources */,
 				44317A5A23E671E2003D854A /* ShoppingCategoryCell.swift in Sources */,
+				4469D28523FB26B1004BFD29 /* Record.swift in Sources */,
 				989F26F423D69BDC00B3EEED /* BudgetCategoriesViewController.swift in Sources */,
 				9890FA3423D69F6600D9DBAE /* BudgetCategoryCell.swift in Sources */,
 				9889219723CB9E09009AB805 /* FinancesPlannerViewController.swift in Sources */,
@@ -574,6 +543,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -627,6 +597,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -642,17 +613,12 @@
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 5F35F2ZNFF;
 				ENABLE_PREVIEWS = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-					"$(PROJECT_DIR)/Frameworks",
-				);
 				INFOPLIST_FILE = "$(SRCROOT)/PlanejadorPessoal/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "cga.Planejador-Pessoal";
+				PRODUCT_BUNDLE_IDENTIFIER = com.calvinaquino.planner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
@@ -671,17 +637,12 @@
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 5F35F2ZNFF;
 				ENABLE_PREVIEWS = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-					"$(PROJECT_DIR)/Frameworks",
-				);
 				INFOPLIST_FILE = "$(SRCROOT)/PlanejadorPessoal/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "cga.Planejador-Pessoal";
+				PRODUCT_BUNDLE_IDENTIFIER = com.calvinaquino.planner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
