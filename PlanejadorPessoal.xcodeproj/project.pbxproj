@@ -19,7 +19,7 @@
 		986074AF23DFEE7A0014B153 /* FormSelectInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986074AE23DFEE7A0014B153 /* FormSelectInputCell.swift */; };
 		986074B123DFF05B0014B153 /* FormCellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986074B023DFF05B0014B153 /* FormCellProtocol.swift */; };
 		98880EE223D0173600A54315 /* ViewUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98880EE123D0173600A54315 /* ViewUtils.swift */; };
-		98880EE423D024A500A54315 /* BudgetCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98880EE323D024A500A54315 /* BudgetCategory.swift */; };
+		98880EE423D024A500A54315 /* TransactionCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98880EE323D024A500A54315 /* TransactionCategory.swift */; };
 		9889219523CB9DF8009AB805 /* ShoppingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9889219423CB9DF8009AB805 /* ShoppingListViewController.swift */; };
 		9889219723CB9E09009AB805 /* FinancesPlannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9889219623CB9E09009AB805 /* FinancesPlannerViewController.swift */; };
 		988921D723CC1B96009AB805 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988921D623CC1B96009AB805 /* DatabaseManager.swift */; };
@@ -74,7 +74,7 @@
 		986074B023DFF05B0014B153 /* FormCellProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormCellProtocol.swift; sourceTree = "<group>"; };
 		9861C9A923CB97970070F05F /* PlanejadorPessoal.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PlanejadorPessoal.entitlements; sourceTree = "<group>"; };
 		98880EE123D0173600A54315 /* ViewUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewUtils.swift; sourceTree = "<group>"; };
-		98880EE323D024A500A54315 /* BudgetCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetCategory.swift; sourceTree = "<group>"; };
+		98880EE323D024A500A54315 /* TransactionCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCategory.swift; sourceTree = "<group>"; };
 		9889219423CB9DF8009AB805 /* ShoppingListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListViewController.swift; sourceTree = "<group>"; };
 		9889219623CB9E09009AB805 /* FinancesPlannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinancesPlannerViewController.swift; sourceTree = "<group>"; };
 		988921D623CC1B96009AB805 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
@@ -200,7 +200,7 @@
 			children = (
 				988921DD23CC1C6D009AB805 /* ShoppingItem.swift */,
 				98CCB0C123CD602800CA8C1B /* TransactionItem.swift */,
-				98880EE323D024A500A54315 /* BudgetCategory.swift */,
+				98880EE323D024A500A54315 /* TransactionCategory.swift */,
 				9890FA3523D6D35B00D9DBAE /* ShoppingCategory.swift */,
 				4469D28423FB26B1004BFD29 /* Record.swift */,
 			);
@@ -439,7 +439,7 @@
 				98CCB0C623CD64C000CA8C1B /* CalendarManager.swift in Sources */,
 				986074A623DFCEF30014B153 /* FormTextInputCell.swift in Sources */,
 				98EBB78E23E1541B00D97270 /* TransactionFormViewController.swift in Sources */,
-				98880EE423D024A500A54315 /* BudgetCategory.swift in Sources */,
+				98880EE423D024A500A54315 /* TransactionCategory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

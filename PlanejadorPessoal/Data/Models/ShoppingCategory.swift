@@ -28,15 +28,8 @@ struct ShoppingSection {
     var category: ShoppingCategory?
     var items: [ShoppingItem]
     var categoryName: String {
-        if let category = self.category {
-            return category.name
-        }
-        return "Geral"
+        category?.name ?? "Geral"
     }
-    
-    //    var total: Double {
-    //        self.items.reduce(0) { ($1.isNeeded.boolValue ? 1 : 0) + $0 }
-    //    }
 }
 
 extension Array where Iterator.Element == ShoppingSection {

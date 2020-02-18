@@ -20,8 +20,8 @@ class DatabaseManager {
         CKRecordZone.default().zoneID
     }
     
-    class func queryOperation(for recordType: Record.Type) -> CKQueryOperation {
-        let query = CKQuery(recordType: recordType.recordType, predicate: NSPredicate(value: true))
+    class func queryOperation(for recordType: Record.Type, predicate: NSPredicate = NSPredicate(value: true)) -> CKQueryOperation {
+        let query = CKQuery(recordType: recordType.recordType, predicate: predicate)
         let queryOperation = CKQueryOperation(query: query)
         queryOperation.database = database
         return queryOperation
@@ -78,7 +78,29 @@ class DatabaseManager {
         fetchOperation.start()
     }
     
-    class func fetchFinances(for month: Int, year: Int, completion: @escaping ([BudgetSection]) -> Void) {
+    class func fetchFinances(for month: Int, year: Int, completion: @escaping ([TransactionSection]) -> Void) {
+        DatabaseManager.fetchTransactionCategories { (transactionCategories) in
+            DatabaseManager.fetchTransactionItems(for: month, year: year) { (transactionItems) in
+                var sections: [TransactionSection] = []
+                let generalSection = TransactionSection(category: nil, transactions: transactionItems.filter({
+                    ($0.transactionCategory == nil)
+                }))
+                if generalSection.transactions.count > 0 {
+                    sections.append(generalSection)
+                }
+                for category in transactionCategories {
+                    print(category.debugDescription)
+                    let section = TransactionSection(category: category, transactions: transactionItems.filter({
+                        ($0.transactionCategory != nil) ? $0.transactionCategory!.objectId == category.objectId : false
+                    }))
+                    if section.transactions.count > 0 {
+                        sections.append(section)
+                    }
+                }
+                completion(sections)
+            }
+        }
+        
 //        DatabaseManager.fetchBudgetCategories { (budgetCategories) in
 //            PFObject.pinAll(inBackground: budgetCategories)
 //            DatabaseManager.fetchTransactionsList(for: month, year: year) { (transactionItems) in
@@ -107,37 +129,43 @@ class DatabaseManager {
         completion([])
     }
     
-    class func fetchTransactionsList(for month: Int, year: Int, completion: @escaping ([TransactionItem]) -> Void) {
-//        if let query = TransactionItem.query() {
-//            query.whereKey("month", equalTo: month)
-//            query.whereKey("year", equalTo: year)
-//            query.includeKey("budgetCategory")
-//            query.findObjectsInBackground { (results: [PFObject]?, error: Error?) in
-//                if let error = error {
-//                    ErrorUtils.showErrorAler(message: error.localizedDescription)
-//                } else {
-//                    if let results = results as? [TransactionItem] {
-//                        completion(results)
-//                    }
-//                }
-//            }
-//        }
-        completion([])
+    class func fetchTransactionItems(for month: Int, year: Int, completion: @escaping ([TransactionItem]) -> Void) {
+        var transactionItems: [TransactionItem] = []
+        let monthPredicate = NSPredicate(format: "month == %@", month)
+        let yearPredicate = NSPredicate(format: "year == %@", year)
+        let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [monthPredicate, yearPredicate])
+        let fetchOperation = queryOperation(for: TransactionItem.self, predicate: compoundPredicate)
+        fetchOperation.recordFetchedBlock = { record in
+            transactionItems.append(TransactionItem(with: record))
+        }
+        fetchOperation.queryCompletionBlock = { cursor, error in
+            if let error = error {
+                self.errorAlert(error: error)
+            }
+            print(transactionItems)
+            DispatchQueue.main.async {
+                completion(transactionItems)
+            }
+        }
+        fetchOperation.start()
     }
     
-    class func fetchBudgetCategories(completion: @escaping ([TransactionCategory]) -> Void) {
-//        if let query = BudgetCategory.query() {
-//            query.findObjectsInBackground { (results: [PFObject]?, error: Error?) in
-//                if let error = error {
-//                    ErrorUtils.showErrorAler(message: error.localizedDescription)
-//                } else {
-//                    if let results = results as? [BudgetCategory] {
-//                        completion(results)
-//                    }
-//                }
-//            }
-//        }
-        completion([])
+    class func fetchTransactionCategories(completion: @escaping ([TransactionCategory]) -> Void) {
+        var transactionCategories: [TransactionCategory] = []
+        let fetchOperation = queryOperation(for: TransactionCategory.self)
+        fetchOperation.recordFetchedBlock = { record in
+            transactionCategories.append(TransactionCategory(with: record))
+        }
+        fetchOperation.queryCompletionBlock = { cursor, error in
+            if let error = error {
+                self.errorAlert(error: error)
+            }
+            print(transactionCategories)
+            DispatchQueue.main.async {
+                completion(transactionCategories)
+            }
+        }
+        fetchOperation.start()
     }
     
     class func fetchBudgetCategories() -> [TransactionCategory]? {

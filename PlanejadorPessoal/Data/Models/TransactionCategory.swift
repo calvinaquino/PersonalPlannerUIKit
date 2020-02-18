@@ -8,26 +8,41 @@
 
 // Not used until I resolve the nested PFObject issue on subclass
 import Foundation
+import CloudKit
 
 class TransactionCategory: Record {
     override class var recordType: String {
         "TransactionCategory"
     }
     
-    var name: String!
-    var budget: NSNumber?
-}
-
-struct BudgetSection {
-    var category: TransactionCategory
-    var transactions: [TransactionItem]
-    
-    var total: Double {
-        self.transactions.reduce(0) { $1.value.doubleValue + $0 }
+    var name: String! {
+        get { self.ckRecord["name"] }
+        set { self.ckRecord["name"] = newValue! }
+    }
+    var budget: Double? {
+        get { self.ckRecord["budget"] }
+        set { self.ckRecord["budget"] = newValue }
     }
 }
 
-extension Array where Iterator.Element == BudgetSection {
+struct TransactionSection {
+    var category: TransactionCategory?
+    var transactions: [TransactionItem]
+    
+    var categoryName: String {
+        category?.name ?? "Geral"
+    }
+    
+    var categoryBudget: Double {
+        category?.budget ?? 0.0
+    }
+    
+    var total: Double {
+        self.transactions.reduce(0) { $1.value + $0 }
+    }
+}
+
+extension Array where Iterator.Element == TransactionSection {
     var totalTransactions: Double {
         var total = 0.0
         for section in self {
@@ -50,7 +65,7 @@ extension Array where Iterator.Element == BudgetSection {
         for section in self {
             let filteredTransactions = section.transactions.filter({searchPredicate.evaluate(with: $0.name)})
             if (filteredTransactions.count > 0) {
-                filteredSections.append(BudgetSection(category: section.category, transactions: filteredTransactions))
+                filteredSections.append(TransactionSection(category: section.category, transactions: filteredTransactions))
             }
         }
         

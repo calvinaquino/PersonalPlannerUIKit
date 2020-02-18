@@ -30,7 +30,7 @@ class ShoppingItem: Record {
         get { self.ckRecord["isNeeded"] }
         set { self.ckRecord["isNeeded"] = newValue}
     }
-    // not like this
+    
     var shoppingCategory: ShoppingCategory? {
         get {
             if let reference = self.ckRecord["shoppingCategory"] as? CKRecord.Reference {
