@@ -1,17 +1,17 @@
 //
-//  ShoppingCategoriesViewController.swift
+//  BudgetCategoriesViewController.swift
 //  PlanejadorPessoal
 //
-//  Created by Calvin De Aquino on 2020-02-01.
+//  Created by Calvin Gonçalves de Aquino on 1/20/20.
 //  Copyright © 2020 Calvin Gonçalves de Aquino. All rights reserved.
 //
 
 import UIKit
 
-class ShoppingCategoriesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchResultsUpdating, UITextFieldDelegate {
+class BudgetCategoriesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchResultsUpdating, UITextFieldDelegate {
     
-    var items: [ShoppingCategory] = []
-    var filteredItems: [ShoppingCategory] = []
+    var items: [TransactionCategory] = []
+    var filteredItems: [TransactionCategory] = []
     var tableView: UITableView!
     var refreshControl: UIRefreshControl!
     var searchController: UISearchController!
@@ -45,7 +45,7 @@ class ShoppingCategoriesViewController: UIViewController, UITableViewDelegate, U
     
     func setupTableView() {
         self.tableView = UITableView()
-        self.tableView.register(ShoppingCategoryCell.self, forCellReuseIdentifier: ShoppingCategoryCell.Identifier)
+        self.tableView.register(TransactionCategoryCell.self, forCellReuseIdentifier: TransactionCategoryCell.Identifier)
         self.tableView.tableFooterView = UIView()
         tableView.delegate = self
         tableView.dataSource = self
@@ -69,8 +69,8 @@ class ShoppingCategoriesViewController: UIViewController, UITableViewDelegate, U
     // MARK: - Helper Functions
     
     @objc func fetchData() {
-        DatabaseManager.fetchShoppingCategories { (shoppingCategories) in
-            self.items = shoppingCategories
+        DatabaseManager.fetchTransactionCategories{ (transactionCategories) in
+            self.items = transactionCategories
             if self.refreshControl.isRefreshing {
                 self.refreshControl.endRefreshing()
             }
@@ -86,7 +86,7 @@ class ShoppingCategoriesViewController: UIViewController, UITableViewDelegate, U
         return self.items.filter{ $0.name == name }.first != nil
     }
     
-    func getItems() -> [ShoppingCategory] {
+    func getItems() -> [TransactionCategory] {
         return self.searchController.isActive ? self.filteredItems : self.items
     }
     
@@ -101,10 +101,11 @@ class ShoppingCategoriesViewController: UIViewController, UITableViewDelegate, U
     
     // MARK:-  CRUD Functions
     
-    @objc func newItem(name: String) {
-        let newShoppingCategory = ShoppingCategory(with: nil)
-        newShoppingCategory.name = name
-        newShoppingCategory.save { (record, error) in
+    @objc func newItem(name: String, budget: NSNumber?) {
+        let newTransactionCategory = TransactionCategory(with: nil)
+        newTransactionCategory.name = name
+        newTransactionCategory.budget = budget?.doubleValue
+        newTransactionCategory.save { (record, error) in
             self.fetchData()
         }
     }
@@ -118,7 +119,7 @@ class ShoppingCategoriesViewController: UIViewController, UITableViewDelegate, U
         self.showNewItemDialog()
     }
     
-    @objc func showEditItemDialog(item: ShoppingCategory) {
+    @objc func showEditItemDialog(item: TransactionCategory) {
         self.showItemDialog(itemName: nil, item: item)
     }
     
@@ -126,22 +127,24 @@ class ShoppingCategoriesViewController: UIViewController, UITableViewDelegate, U
         self.showItemDialog(itemName: itemName, item: nil)
     }
     
-    func showItemDialog(itemName: String? = nil, item: ShoppingCategory? = nil) {
+    func showItemDialog(itemName: String? = nil, item: TransactionCategory? = nil) {
         let isEditing = item != nil
         let title = isEditing ? "Editar item" : "Novo item"
         let alert = UIAlertController(title: title, message: "Insira os dados do item:", preferredStyle: UIAlertController.Style.alert )
         
         let save = UIAlertAction(title: "Finalizar", style: .default) { (alertAction) in
             let nameTextField = alert.textFields![0] as UITextField
-            if let name = nameTextField.text, name != "" {
+            let budgetTextField = alert.textFields![1] as UITextField
+            if let name = nameTextField.text, name != "", let budget = budgetTextField.text {
                 let nameAlreadyExists = self.nameAlreadyExists(name: name, whitelist: isEditing ? [item!.name] : nil)
                 if isEditing && !nameAlreadyExists, let item = item { // nameAlreadyExists needs to be checked but disregrd original name
                     item.name = name
+                    item.budget = budget.doubleValue
                     item.save { (record, error) in
                         self.fetchData()
                     }
                 } else if !nameAlreadyExists {
-                    self.newItem(name: name)
+                    self.newItem(name: name, budget: budget.numberValue)
                 } else {
                     ErrorUtils.showErrorAler(message: "Nome já existe.")
                 }
@@ -156,6 +159,12 @@ class ShoppingCategoriesViewController: UIViewController, UITableViewDelegate, U
                 textField.text = name
             } else if isEditing {
                 textField.text = item!.name
+            }
+        }
+        alert.addTextField { (textField) in
+            textField.placeholder = "Valor máximo"
+            if isEditing {
+                textField.text = item!.budget?.stringCurrencyValue
             }
         }
         
@@ -173,24 +182,25 @@ class ShoppingCategoriesViewController: UIViewController, UITableViewDelegate, U
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCell(withIdentifier: ShoppingCategoryCell.Identifier, for: indexPath) as! ShoppingCategoryCell
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: TransactionCategoryCell.Identifier, for: indexPath) as! TransactionCategoryCell
         
-        let ShoppingCategory = self.getItems()[indexPath.row]
-        cell.textLabel?.text = ShoppingCategory.name
+        let budgetCategory = self.getItems()[indexPath.row]
+        cell.textLabel?.text = budgetCategory.name
+        cell.detailTextLabel?.text = budgetCategory.budget?.stringCurrencyValue
         cell.detailTextLabel?.textColor = .gray
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.tableView.deselectRow(at: indexPath, animated: true)
-        let ShoppingCategory = self.getItems()[indexPath.row]
-        self.showEditItemDialog(item: ShoppingCategory)
+        let budgetCategory = self.getItems()[indexPath.row]
+        self.showEditItemDialog(item: budgetCategory)
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
-            let shoppingCategory = self.getItems()[indexPath.row]
-            shoppingCategory.delete { (recordId, error) in
+            let transactionCategory = self.getItems()[indexPath.row]
+            transactionCategory.delete { (recordId, error) in
                 if error == nil {
                     self.fetchData()
                 }
@@ -215,3 +225,4 @@ class ShoppingCategoriesViewController: UIViewController, UITableViewDelegate, U
         return true
     }
 }
+

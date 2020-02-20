@@ -43,7 +43,8 @@ class TransactionItem: Record {
         get {
             if let reference = self.ckRecord["transactionCategory"] as? CKRecord.Reference {
                 let record = CKRecord(recordType: TransactionCategory.recordType, recordID: reference.recordID)
-                return TransactionCategory(with: record)
+                let cached = DatabaseManager.cachedTransactionCategories().first { $0.objectId == record.recordID.recordName }
+                return cached ?? TransactionCategory(with: record)
             }
             return nil
         }

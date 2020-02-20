@@ -10,8 +10,8 @@ import UIKit
 
 class FinancesPlannerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchResultsUpdating, UITextFieldDelegate {
     
-    var items: [BudgetSection] = []
-    var filteredItems: [BudgetSection] = []
+    var items: [TransactionSection] = []
+    var filteredItems: [TransactionSection] = []
     let cellReuseIdentifier = "cell"
     var tableView: UITableView!
     var refreshControl: UIRefreshControl!
@@ -20,7 +20,7 @@ class FinancesPlannerViewController: UIViewController, UITableViewDelegate, UITa
     var totalValueBarItem: UIBarButtonItem!
     let calendar: CalendarManager = CalendarManager()
     
-    var sections: [BudgetSection] {
+    var sections: [TransactionSection] {
         self.searchController.isActive ? self.filteredItems : self.items
     }
     
@@ -37,9 +37,9 @@ class FinancesPlannerViewController: UIViewController, UITableViewDelegate, UITa
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        super .viewDidAppear(animated)
+        super.viewDidAppear(animated)
         
-        fetchData()
+        self.fetchData()
     }
     
     override func viewDidLayoutSubviews() {
@@ -95,8 +95,8 @@ class FinancesPlannerViewController: UIViewController, UITableViewDelegate, UITa
     }
     
     @objc func fetchData() {
-        DatabaseManager.fetchFinances(for: calendar.month, year: calendar.year) { (transactionItems) in
-            self.items = transactionItems
+        DatabaseManager.fetchFinances(for: calendar.month, year: calendar.year) { (transactionSections) in
+            self.items = transactionSections
             if self.refreshControl.isRefreshing {
                 self.refreshControl.endRefreshing()
             }
@@ -110,11 +110,11 @@ class FinancesPlannerViewController: UIViewController, UITableViewDelegate, UITa
         let yes = UIAlertAction(title: "Sim", style: .default) { (alertAction) in
             let monthLeftOverTransaction = TransactionItem(with: nil)
             self.calendar.nextMonth()
-            monthLeftOverTransaction.month = self.calendar.month!.numberValue
-            monthLeftOverTransaction.year = self.calendar.year!.numberValue
+            monthLeftOverTransaction.month = self.calendar.month!
+            monthLeftOverTransaction.year = self.calendar.year!
             self.calendar.previousMonth()
             monthLeftOverTransaction.name = "Sobra mes anterior"
-            monthLeftOverTransaction.value = self.items.totalTransactions.numberValue
+            monthLeftOverTransaction.value = self.items.totalTransactions
 //            monthLeftOverTransaction.saveInBackground()
         }
         alert.addAction(yes)
@@ -140,7 +140,7 @@ class FinancesPlannerViewController: UIViewController, UITableViewDelegate, UITa
     }
     
     func getTotal() -> String {
-        self.items.totalTransactions.currencyString
+        self.items.totalTransactions.stringCurrencyValue
     }
     
     @objc func reloadData() {
@@ -158,12 +158,12 @@ class FinancesPlannerViewController: UIViewController, UITableViewDelegate, UITa
     @objc func newItem(name: String, price: NSNumber?, month: NSNumber?, year: NSNumber?) {
         let newTransactionItem = TransactionItem(with: nil)
         newTransactionItem.name = name
-        newTransactionItem.value = price ?? 0
-        newTransactionItem.month = month ?? calendar.month.numberValue
-        newTransactionItem.year = year ?? calendar.year.numberValue
-//        newTransactionItem.saveInBackground().continueOnSuccessWith(block: { (_) -> Any? in
-//            self.fetchData()
-//        })
+        newTransactionItem.value = price?.doubleValue ?? 0.0
+        newTransactionItem.month = month?.intValue ?? calendar.month
+        newTransactionItem.year = year?.intValue ?? calendar.year
+        newTransactionItem.save { (record, error) in
+            self.fetchData()
+        }
     }
     
     @objc func removeItem(at row: Int) {
@@ -176,6 +176,7 @@ class FinancesPlannerViewController: UIViewController, UITableViewDelegate, UITa
     }
     
     @objc func openTransactionItemForm(forItem item: TransactionItem? = nil) {
+        DatabaseManager.preloadTransactionCategories()
         let form = TransactionFormViewController(transaction: item)
         self.present(form.withNavigation(), animated: true, completion: nil)
     }
@@ -194,7 +195,7 @@ class FinancesPlannerViewController: UIViewController, UITableViewDelegate, UITa
         let cell = self.tableView.dequeueReusableCell(withIdentifier: TransactionItemCell.Identifier, for: indexPath) as! TransactionItemCell
         let transactionItem = self.sections.transaction(at: indexPath)
         cell.textLabel?.text = transactionItem.name
-        cell.detailTextLabel?.text = transactionItem.value!.currencyString
+        cell.detailTextLabel?.text = transactionItem.value!.stringCurrencyValue
         cell.detailTextLabel?.textColor = .gray
         return cell
     }
@@ -209,26 +210,22 @@ class FinancesPlannerViewController: UIViewController, UITableViewDelegate, UITa
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
             let transactionItem = self.sections.transaction(at: indexPath)
-//            transactionItem.deleteInBackground { (success: Bool, error: Error?) in
-//                if let error = error {
-//                    print(error.localizedDescription)
-//                } else if success {
-//                    self.fetchData()
-//                }
-//            }
+            transactionItem.delete { (recordId, error) in
+                if error == nil {
+                    self.fetchData()
+                }
+            }
         }
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "FIXME"
         let section = self.sections[section]
-//        let sectionForTotal = self.items.filter { $0.category.objectId == section.category.objectId }.first
-//        let category = section.category
-//        if category.name == "Geral" {
-//            return category.name!
-//        }
-//        let remaining = category.budget!.doubleValue + sectionForTotal!.total
-//        return "\(category.name!)  (\(remaining.currencyString))"
+        let sectionForTotal = self.items.filter { $0.category?.objectId == section.category?.objectId }.first
+        if section.category == nil {
+            return section.categoryName
+        }
+        let remaining = section.categoryBudget + sectionForTotal!.total
+        return "\(section.categoryName)  (\(remaining.stringCurrencyValue))"
     }
     
     // MARK: - UISearchResultsUpdating

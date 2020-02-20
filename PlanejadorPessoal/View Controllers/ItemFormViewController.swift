@@ -27,14 +27,11 @@ class ItemFormViewController: FormViewController {
     // MARK: - Helper
     
     func getCategoryOptions() -> [FieldOption] {
-//        if let categories = DatabaseManager.fetchShoppingCategories() {
-//            var fieldOptions = categories.map({ (shoppingCategory) -> FieldOption in
-//                return FieldOption(id: shoppingCategory.objectId!, name: shoppingCategory.name)
-//            })
-//            fieldOptions.append(FieldOption(id: "", name: "Geral"))
-//            return fieldOptions
-//        }
-        return []
+        var fieldOptions = DatabaseManager.cachedShoppingCategories().map({ (shoppingCategory) -> FieldOption in
+            return FieldOption(id: shoppingCategory.objectId, name: shoppingCategory.name)
+        })
+        fieldOptions.append(FieldOption(id: "", name: "Geral"))
+        return fieldOptions
     }
     
     // MARK: - Required By Subclass
@@ -53,7 +50,7 @@ class ItemFormViewController: FormViewController {
             self.tableView.reloadData()
         }
         // Price
-        var priceField = FormField(name: "Preço", type: .TextInput, value: self.item?.price?.currencyString)
+        var priceField = FormField(name: "Preço", type: .TextInput, value: self.item?.price?.stringCurrencyValue)
         priceField.didChange = {
             self.fields[2].value = $0
             self.tableView.reloadData()
@@ -65,11 +62,13 @@ class ItemFormViewController: FormViewController {
                 self.fields[3].value = "Geral"
                 self.tableView.reloadData()
             } else {
-//                let newCategory = ShoppingCategory(withoutDataWithObjectId: $0)
-//                newCategory.fetchIfNeededInBackground(block: { (_, error) in
-//                    self.fields[3].value = newCategory.name
-//                    self.tableView.reloadData()
-//                })
+                let newCategory = ShoppingCategory(withObjectId: $0)
+                newCategory.fetch { (record, error) in
+                    DispatchQueue.main.async {
+                        self.fields[3].value = newCategory.name
+                        self.tableView.reloadData()
+                    }
+                }
             }
         }
         return [
@@ -84,14 +83,16 @@ class ItemFormViewController: FormViewController {
         if let item = self.item {
             item.name = self.fields[0].value
             item.localizedName = self.fields[1].value
-//            item.price = self.fields[2].value?.numberValue
+            item.price = self.fields[2].value?.doubleValue
             DatabaseManager.fetchShoppingCategories { (shoppingCategories) in
                 item.shoppingCategory = shoppingCategories.filter({ $0.name == self.fields[3].value }).first
-//                item.saveInBackground(block: { (success, error) in
-//                    self.dismiss(animated: true) {
-//                        NotificationCenter.default.post(name: ItemCreatedNotification, object: nil)
-//                    }
-//                })
+                item.save { (record, error) in
+                    DispatchQueue.main.async {
+                        self.dismiss(animated: true) {
+                            NotificationCenter.default.post(name: ItemCreatedNotification, object: nil)
+                        }
+                    }
+                }
             }
         }
     }

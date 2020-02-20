@@ -22,9 +22,9 @@ class TransactionFormViewController: FormViewController {
         } else {
             let newItem = TransactionItem(with: nil)
             newItem.value = 0
-            newItem.day = Calendar.current.component(.day, from: Date()).numberValue
-            newItem.month = (Calendar.current.component(.month, from: Date()) - 1).numberValue
-            newItem.year = Calendar.current.component(.year, from: Date()).numberValue
+            newItem.day = Calendar.current.component(.day, from: Date())
+            newItem.month = (Calendar.current.component(.month, from: Date()) - 1)
+            newItem.year = Calendar.current.component(.year, from: Date())
             self.transaction = newItem
         }
     }
@@ -32,12 +32,9 @@ class TransactionFormViewController: FormViewController {
     // MARK: - Helper
     
     func getCategoryOptions() -> [FieldOption] {
-//        if let categories = DatabaseManager.fetchBudgetCategories() {
-//            return categories.map({ (budgetCategory) -> FieldOption in
-//                return FieldOption(id: budgetCategory.objectId!, name: budgetCategory.name)
-//            })
-//        }
-        return []
+        return DatabaseManager.cachedTransactionCategories().map({ (transactionCategory) -> FieldOption in
+            return FieldOption(id: transactionCategory.objectId, name: transactionCategory.name)
+        })
     }
     
     func getYears() -> [FieldOption] {
@@ -63,7 +60,7 @@ class TransactionFormViewController: FormViewController {
     
     func getDays() -> [FieldOption] {
         // get all days for selected month
-        var month = self.transaction?.month.intValue
+        var month = self.transaction?.month
         if let monthFromField = self.fields[4].value {
             month = Int(monthFromField)
         }
@@ -92,20 +89,27 @@ class TransactionFormViewController: FormViewController {
             self.tableView.reloadData()
         }
         // Price
-        var priceField = FormField(name: "Preço", type: .TextInput, value: self.transaction?.value?.currencyString)
+        var priceField = FormField(name: "Preço", type: .TextInput, value: self.transaction?.value?.stringCurrencyValue)
         priceField.didChange = {
             self.fields[1].value = $0
             self.tableView.reloadData()
         }
         // Category
-        var categoryField = FormField(name: "Categoria", type: .Selection, value: self.transaction?.budgetCategory?.name, options: self.getCategoryOptions)
-//        categoryField.didChange = {
-//            let newCategory = TransactionCategory(withoutDataWithObjectId: $0)
-//            newCategory.fetchIfNeededInBackground(block: { (_, error) in
-//                self.fields[2].value = newCategory.name
-//                self.tableView.reloadData()
-//            })
-//        }
+        var categoryField = FormField(name: "Categoria", type: .Selection, value: self.transaction?.transactionCategory?.name, options: self.getCategoryOptions)
+        categoryField.didChange = {
+            if $0 == "" {
+                self.fields[2].value = "Geral"
+                self.tableView.reloadData()
+            } else {
+                let newCategory = TransactionCategory(withObjectId: $0)
+                newCategory.fetch { (record, error) in
+                    DispatchQueue.main.async {
+                        self.fields[2].value = newCategory.name
+                        self.tableView.reloadData()
+                    }
+                }
+            }
+        }
         // Day
         var dayField = FormField(name: "Dia", type: .Selection, value: self.transaction?.day?.stringValue, options: self.getDays)
         dayField.didChange = {
@@ -119,7 +123,7 @@ class TransactionFormViewController: FormViewController {
             self.tableView.reloadData()
         }
         monthField.valueFormat = {
-            DateFormatter().monthSymbols[Int($0)!]
+            DateFormatter().monthSymbols[$0.intValue]
         }
         // Year
         var yearField = FormField(name: "Ano", type: .Selection, value: self.transaction?.year.stringValue, options: self.getYears)
@@ -141,14 +145,16 @@ class TransactionFormViewController: FormViewController {
     @objc override func onSave() {
         if let item = self.transaction {
             item.name = self.fields[0].value
-            item.value = self.fields[1].value?.numberValue
-            DatabaseManager.fetchBudgetCategories { (budgetCategories) in
-                item.budgetCategory = budgetCategories.filter({ $0.name == self.fields[2].value }).first
-//                item.saveInBackground(block: { (success, error) in
-//                    self.dismiss(animated: true) {
-//                        NotificationCenter.default.post(name: TransactionCreatedNotification, object: nil)
-//                    }
-//                })
+            item.value = self.fields[1].value?.doubleValue
+            DatabaseManager.fetchTransactionCategories { (transactionCategories) in
+                item.transactionCategory = transactionCategories.filter({ $0.name == self.fields[2].value }).first
+                item.save { (record, error) in
+                    DispatchQueue.main.async {
+                        self.dismiss(animated: true) {
+                            NotificationCenter.default.post(name: TransactionCreatedNotification, object: nil)
+                        }
+                    }
+                }
             }
         }
     }

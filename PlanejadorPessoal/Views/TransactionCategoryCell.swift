@@ -1,5 +1,5 @@
 //
-//  BudgetCategoryCell.swift
+//  TransactionCategoryCell.swift
 //  PlanejadorPessoal
 //
 //  Created by Calvin Gonçalves de Aquino on 1/20/20.
@@ -8,9 +8,9 @@
 
 import UIKit
 
-class BudgetCategoryCell: UITableViewCell {
+class TransactionCategoryCell: UITableViewCell {
   
-  static let Identifier = "BudgetCategoryCell"
+  static let Identifier = "TransactionCategoryCell"
   
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: .value1, reuseIdentifier: reuseIdentifier)

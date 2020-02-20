@@ -11,14 +11,25 @@ import CloudKit
 
 class Record: NSObject {
     open var ckRecord: CKRecord!
+    var deleted: Bool = false
     
     var objectId: String {
         self.ckRecord.recordID.recordName
     }
     
+    var recordId: CKRecord.ID {
+        self.ckRecord.recordID
+    }
+    
     required init(with record: CKRecord?) {
         super.init()
         self.ckRecord = record ?? Record.newCKRecord(recordType: Self.recordType)
+    }
+    
+    convenience init(withObjectId objectId: String) {
+        let recordId = CKRecord.ID(recordName: objectId)
+        let record = CKRecord(recordType: Self.recordType, recordID: recordId)
+        self.init(with: record)
     }
     
     class var recordType: String {
@@ -31,6 +42,17 @@ class Record: NSObject {
     }
     
     final func save(completion: @escaping (CKRecord?, Error?) -> Void) {
-        DatabaseManager.database.save(self.ckRecord, completionHandler: completion)
+        DatabaseManager.modify(save: self, delete: nil) { completion(self.ckRecord, $2) }
+    }
+    
+    final func fetch(completion: @escaping (CKRecord?, Error?) -> Void) {
+        DatabaseManager.fetch(self) { completion($0.ckRecord, $1) }
+    }
+    
+    final func delete(completion: @escaping (CKRecord.ID?, Error?) -> Void) {
+        DatabaseManager.modify(save: nil, delete: self) {
+            self.deleted = true
+            completion(self.recordId, $2)
+        }
     }
 }

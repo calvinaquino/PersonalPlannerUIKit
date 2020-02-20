@@ -9,41 +9,70 @@
 import Foundation
 
 protocol NumberConvertible {
-  var numberValue: NSNumber { get }
+    var numberValue: NSNumber { get }
 }
 
-protocol CurrencyConvertible {
-  var currencyString: String { get }
+protocol DoubleConvertible {
+    var doubleValue: Double { get }
 }
 
-extension Double: NumberConvertible, CurrencyConvertible {
-  var currencyString: String {
-    String(format: "%.2f", self)
-  }
-  
-  var numberValue: NSNumber {
-    NSNumber(value: self)
-  }
+protocol StringConvertible {
+    var stringValue: String { get }
+    var stringCurrencyValue: String { get }
 }
 
-extension NSNumber: CurrencyConvertible {
-  var currencyString: String {
-    String(format: "%.2f", self.doubleValue)
-  }
+protocol IntConvertigle {
+    var intValue: Int { get }
 }
 
-extension Int: NumberConvertible, CurrencyConvertible {
-  var numberValue: NSNumber {
-    NSNumber(value: self)
-  }
-  
-  var currencyString: String {
-    String(format: "%.2f", self)
-  }
+extension Double: NumberConvertible, StringConvertible {
+    var stringValue: String {
+        String(format: "%.0f", self)
+    }
+    
+    var stringCurrencyValue: String {
+        String(format: "%.2f", self)
+    }
+    
+    var numberValue: NSNumber {
+        NSNumber(value: self)
+    }
 }
 
-extension String: NumberConvertible {
-  var numberValue: NSNumber {
-    return NSNumber(value: Double(self) ?? 0)
-  }
+extension NSNumber: StringConvertible {
+    var stringValue: String {
+        String(format: "%.0f", self.doubleValue)
+    }
+    
+    var stringCurrencyValue: String {
+        String(format: "%.2f", self.doubleValue)
+    }
+}
+
+extension Int: NumberConvertible, StringConvertible {
+    var numberValue: NSNumber {
+        NSNumber(value: self)
+    }
+    
+    var stringValue: String {
+        "\(self)"
+    }
+    
+    var stringCurrencyValue: String {
+        String(format: "%.2f", self)
+    }
+}
+
+extension String: NumberConvertible, DoubleConvertible, IntConvertigle {
+    var numberValue: NSNumber {
+        return NSNumber(value: Double(self) ?? 0)
+    }
+    
+    var doubleValue: Double {
+        return self.numberValue.doubleValue
+    }
+    
+    var intValue: Int {
+        return Int(self) ?? 0
+    }
 }

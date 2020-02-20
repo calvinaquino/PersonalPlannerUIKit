@@ -27,7 +27,7 @@ class ShoppingItem: Record {
         set { self.ckRecord["price"] = newValue! }
     }
     var isNeeded: Bool! {
-        get { self.ckRecord["isNeeded"] }
+        get { self.ckRecord["isNeeded"] ?? false }
         set { self.ckRecord["isNeeded"] = newValue}
     }
     
@@ -35,7 +35,8 @@ class ShoppingItem: Record {
         get {
             if let reference = self.ckRecord["shoppingCategory"] as? CKRecord.Reference {
                 let record = CKRecord(recordType: ShoppingCategory.recordType, recordID: reference.recordID)
-                return ShoppingCategory(with: record)
+                let cached = DatabaseManager.cachedShoppingCategories().first { $0.objectId == record.recordID.recordName }
+                return cached ?? ShoppingCategory(with: record)
             }
             return nil
         }

@@ -124,6 +124,7 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     @objc func openShoppingItemForm(forItem item: ShoppingItem? = nil) {
+        DatabaseManager.preloadShoppingCategories()
         let form = ItemFormViewController(item: item)
         self.present(form.withNavigation(), animated: true, completion: nil)
     }
@@ -143,9 +144,9 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
         
         let shoppingItem = self.sections.item(at: indexPath)
         cell.textLabel?.text = shoppingItem.name
-        cell.detailTextLabel?.text = shoppingItem.price?.currencyString
+        cell.detailTextLabel?.text = shoppingItem.price?.stringCurrencyValue
         cell.detailTextLabel?.textColor = .gray
-//        cell.isNeeded = shoppingItem.isNeeded!.boolValue
+        cell.isNeeded = shoppingItem.isNeeded
         return cell
     }
     
@@ -158,33 +159,31 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
             let shoppingItem = self.sections.item(at: indexPath)
-//            shoppingItem.deleteInBackground { (success: Bool, error: Error?) in
-//                if let error = error {
-//                    print(error.localizedDescription)
-//                } else if success {
-//                    self.fetchData()
-//                }
-//            }
+            shoppingItem.delete { (recordId, error) in
+                if error == nil {
+                    self.fetchData()
+                }
+            }
         }
     }
     
-//    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-//        let shoppingItem = self.sections.item(at: indexPath)
-//        let toggleItemTitle = shoppingItem.isNeeded.boolValue ? "Adquirido" : "Faltando"
-//        let toggleItem = UIContextualAction(style: .normal, title: toggleItemTitle) { (action, view, success) in
-//            shoppingItem.isNeeded = NSNumber(value: !shoppingItem.isNeeded.boolValue)
-//            shoppingItem.saveInBackground().continueOnSuccessWith { (_) -> Any? in
-//                DispatchQueue.main.async {
-//                    self.fetchData()
-//                }
-//            }
-//            success(true)
-//        }
-//        toggleItem.backgroundColor = .systemBlue
-//        let config = UISwipeActionsConfiguration(actions: [toggleItem])
-//        config.performsFirstActionWithFullSwipe = true
-//        return UISwipeActionsConfiguration(actions: [toggleItem])
-//    }
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let shoppingItem = self.sections.item(at: indexPath)
+        let toggleItemTitle = shoppingItem.isNeeded ? "Adquirido" : "Faltando"
+        let toggleItem = UIContextualAction(style: .normal, title: toggleItemTitle) { (action, view, success) in
+            shoppingItem.isNeeded = !shoppingItem.isNeeded
+            shoppingItem.save { (record, error) in
+                DispatchQueue.main.async {
+                    self.fetchData()
+                }
+            }
+            success(true)
+        }
+        toggleItem.backgroundColor = .systemBlue
+        let config = UISwipeActionsConfiguration(actions: [toggleItem])
+        config.performsFirstActionWithFullSwipe = true
+        return UISwipeActionsConfiguration(actions: [toggleItem])
+    }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         let section = self.sections[section]
